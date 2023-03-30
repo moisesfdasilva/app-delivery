@@ -14,8 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     SalesModel.belongsTo(models.Users, { foreignKey: 'userId', as: 'user' });
     SalesModel.belongsTo(models.Users, { foreignKey: 'sellerId', as: 'seller' });
   };
-  // Users.hasMany(SalesModel, { foreignKey: 'userId', as: 'userId' });
-  // Users.hasMany(SalesModel, { foreignKey: 'sellerId', as: 'sellerId' });
 
   return SalesModel;
 };
