@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function login() {
+function Login() {
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -77,4 +77,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;
