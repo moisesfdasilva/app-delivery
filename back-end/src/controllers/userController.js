@@ -2,11 +2,8 @@ const userService = require('../service/user.service');
 
 const getUserLogin = async (req, res) => {
   try {
-    // const { email, password } = req.body;
     const { email } = req.body;
-    console.log('req', email);
-    const user = userService.getByUser(email);
-    console.log('log user', user);
+    const user = await userService.getByUser(email);
     if (!user) return res.status(404).json({ message: 'Not found' });
 
     return res.status(200).json(user);

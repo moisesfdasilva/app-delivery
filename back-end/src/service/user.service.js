@@ -1,9 +1,8 @@
-const { UsersModel } = require('../database/models/Users');
+const { Users } = require('../database/models');
 
-const getByUser = (email) => UsersModel.findOne({
-  where: { email },
-});
+const getByUser = async (email) => {
+  const result = await Users.findOne({ where: { email } });
+  return result;
+};
 
-const getByUser2 = (email) => console.log(email);
-
-module.exports = { getByUser, getByUser2 };
+module.exports = { getByUser };
