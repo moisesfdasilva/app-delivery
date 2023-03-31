@@ -23,6 +23,10 @@ export default function UserProvider({ children }) {
     }
   }
 
+  const UseMemo = (context) => {
+    const cachedValue = useMemo(() => context, [context]);
+    return cachedValue;
+  };
   const context = {
     userLogin,
     setUserLogin,
@@ -30,7 +34,7 @@ export default function UserProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider value={ context }>
+    <UserContext.Provider value={ UseMemo(context) }>
       { children }
     </UserContext.Provider>
   );
