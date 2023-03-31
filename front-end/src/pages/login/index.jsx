@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import UserContext from '../../store/context/UserContext';
 
 function Login() {
+  const history = useHistory();
+
+  const { loginUser } = useContext(UserContext);
+
   const [form, setForm] = useState({
     email: '',
     password: '',
     disabled: true,
+    userNotFound: false,
   });
+
 
   const handleValidation = () => {
     const regex = /\S+@\S+\.\S+/;
@@ -23,15 +31,22 @@ function Login() {
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  useEffect(() => handleValidation(), [form.email, form.password]);
+  const login = async () => {
+    try {
+      const user = await loginUser(form.email, form.password);
+      switch (user.role) {
+      case 'customer':
+        history.push('/customer/products');
+        break;
+      default:
+        history.push('/');
+      }
+    } catch (error) {
+      setForm((prevState) => ({ ...prevState, userNotFound: true}));
+    }
+  };
 
-  // const handleSubmit = () => {
-  //   const objectEmail = {
-  //     email: form.email,
-  //   };
-  //   localStorage.setItem('user', JSON.stringify(objectEmail));
-  //   history.push('/meals');
-  // };
+  useEffect(() => handleValidation(), [form.email, form.password]);
 
   return (
     <div>
@@ -61,18 +76,24 @@ function Login() {
         <button
           type="button"
           data-testid="common_login__button-login"
-          // onClick={ handleSubmit }
           disabled={ form.disabled }
+          onClick={ login }
         >
           LOGIN
         </button>
         <button
           type="button"
           data-testid="common_login__button-register"
+          onClick={ () => history.push('/register') }
         >
           Ainda não tenho conta
         </button>
       </form>
+      { form.userNotFound &&
+        <p data-testid ="common_login__element-invalid-email">
+          Usuario não cadastrado
+        </p>
+      }
     </div>
   );
 }
