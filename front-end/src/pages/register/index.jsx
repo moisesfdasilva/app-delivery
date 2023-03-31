@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Register() {
+  console.log('desenvolver tela de registro');
   return (
     <div>
       <h2>CADASTRO</h2>
