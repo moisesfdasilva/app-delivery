@@ -4,7 +4,7 @@ import UserContext from '../context/UserContext';
 import sendLogin from '../../services/user.services';
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState({
+  const [userLogin, setUserLogin] = useState({
     name: '',
     email: '',
     role: '',
@@ -14,7 +14,7 @@ export default function UserProvider({ children }) {
     try {
       const { user } = await sendLogin(email, password);
       const dataUser = user.dataValues;
-
+      console.log(dataUser);
       setUser({ ...dataUser });
 
       return dataUser;
@@ -24,8 +24,8 @@ export default function UserProvider({ children }) {
   }
 
   const context = {
-    user,
-    setUser,
+    userLogin,
+    setUserLogin,
     loginUser,
   };
 

@@ -14,7 +14,6 @@ function Login() {
     userNotFound: false,
   });
 
-
   const handleValidation = () => {
     const regex = /\S+@\S+\.\S+/;
     const minLength = 5;
@@ -42,7 +41,7 @@ function Login() {
         history.push('/');
       }
     } catch (error) {
-      setForm((prevState) => ({ ...prevState, userNotFound: true}));
+      setForm((prevState) => ({ ...prevState, userNotFound: true }));
     }
   };
 
@@ -89,11 +88,11 @@ function Login() {
           Ainda não tenho conta
         </button>
       </form>
-      { form.userNotFound &&
+      { form.userNotFound && (
         <p data-testid ="common_login__element-invalid-email">
           Usuario não cadastrado
         </p>
-      }
+      )}
     </div>
   );
 }
