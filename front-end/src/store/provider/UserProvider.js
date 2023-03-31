@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import UserContext from '../context/UserContext';
 import sendLogin from '../../services/user.services';
@@ -14,8 +14,9 @@ export default function UserProvider({ children }) {
     try {
       const { user } = await sendLogin(email, password);
       const dataUser = user.dataValues;
+
       console.log(dataUser);
-      setUser({ ...dataUser });
+      setUserLogin({ ...dataUser });
 
       return dataUser;
     } catch (error) {
@@ -23,23 +24,18 @@ export default function UserProvider({ children }) {
     }
   }
 
-  const UseMemo = (context) => {
-    const cachedValue = useMemo(() => context, [context]);
-    return cachedValue;
-  };
-  const context = {
+  const context = useMemo(() => ({
     userLogin,
     setUserLogin,
     loginUser,
-  };
+  }), [userLogin, setUserLogin]);
 
   return (
-    <UserContext.Provider value={ UseMemo(context) }>
+    <UserContext.Provider value={ context }>
       { children }
     </UserContext.Provider>
   );
 }
-
 UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
