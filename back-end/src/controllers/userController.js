@@ -1,18 +1,18 @@
 const userService = require('../service/user.service');
+const { mapError } = require('../utils/error/mapError');
+const md5 = require('md5');
 
-const getUserLogin = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await userService.getByUser(email);
-    if (!user) return res.status(404).json({ message: 'Not found' });
+const postUserLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const hash = md5(password);
+  const user = await userService.postLogin(email, hash);
 
-    return res.status(200).json(user);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: 'internal error' });
-  }
+  if(user.type) return res.status(mapError(user.type))
+    .json({ message: user.message });
+
+  return res.status(200).json({ token: user });
 };
 
 module.exports = {
-  getUserLogin,
+  postUserLogin,
 };
