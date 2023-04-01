@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../store/context/UserContext';
+import sendLogin from '../../services/user.services';
 
 function Login() {
   const history = useHistory();
 
-  const { loginUser } = useContext(UserContext);
+  const { setUserLogin } = useContext(UserContext);
 
   const [form, setForm] = useState({
     email: '',
@@ -30,16 +31,21 @@ function Login() {
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const redirect = (role) => {
+    switch (role) {
+    case 'customer':
+      history.push('/customer/products');
+      break;
+    default:
+      history.push('/');
+    }
+  };
+
   const login = async () => {
     try {
-      const user = await loginUser(form.email, form.password);
-      switch (user.role) {
-      case 'customer':
-        history.push('/customer/products');
-        break;
-      default:
-        history.push('/');
-      }
+      const { dataValues } = await sendLogin(form.email, form.password);
+      setUserLogin({ ...dataValues });
+      redirect(dataValues.role);
     } catch (error) {
       setForm((prevState) => ({ ...prevState, userNotFound: true }));
     }
