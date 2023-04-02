@@ -43,16 +43,16 @@ function Login() {
 
   const login = () => {
     const { email, password } = form;
-    try {
-      api.post('/user', { email, password })
-        .then((response) => {
-          const { user } = response.data;
-          setUser({ ...user.dataValues });
-          redirect(user.dataValues.role);
-        });
-    } catch (error) {
-      setForm((prevState) => ({ ...prevState, userNotFound: true }));
-    }
+    api.post('/user', { email, password })
+      .then((response) => {
+        const { user } = response.data;
+        console.log(user);
+        setUser({ ...user.dataValues });
+        redirect(user.dataValues.role);
+      }).catch(({ response }) => {
+        console.log(response);
+        setForm((prevState) => ({ ...prevState, userNotFound: true }));
+      });
   };
 
   useEffect(() => handleValidation(), [form.email, form.password]);
