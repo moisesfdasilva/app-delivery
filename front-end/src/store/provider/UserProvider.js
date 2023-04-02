@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import UserContext from '../context/UserContext';
 
 export default function UserProvider({ children }) {
-  const [userLogin, setUserLogin] = useState({
+  const [user, setUser] = useState({
     name: '',
     email: '',
     role: '',
   });
 
   const context = useMemo(() => ({
-    userLogin,
-    setUserLogin,
-  }), [userLogin, setUserLogin]);
+    user,
+    setUser,
+  }), [user, setUser]);
 
   return (
     <UserContext.Provider value={ context }>

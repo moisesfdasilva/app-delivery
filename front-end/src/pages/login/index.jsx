@@ -6,7 +6,7 @@ import sendLogin from '../../services/user.services';
 function Login() {
   const history = useHistory();
 
-  const { setUserLogin } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const [form, setForm] = useState({
     email: '',
@@ -44,7 +44,7 @@ function Login() {
   const login = async () => {
     try {
       const { dataValues } = await sendLogin(form.email, form.password);
-      setUserLogin({ ...dataValues });
+      setUser({ ...dataValues });
       redirect(dataValues.role);
     } catch (error) {
       setForm((prevState) => ({ ...prevState, userNotFound: true }));
