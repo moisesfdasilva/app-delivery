@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import api from '../../services/api';
+import UserContext from '../../store/context/UserContext';
+// import api from '../../services/api';
 
 function Login() {
   const history = useHistory();
+
+  const { setUser } = useContext(UserContext);
 
   const [form, setForm] = useState({
     email: '',
@@ -38,17 +41,36 @@ function Login() {
     }
   };
 
-  const login = () => {
+  const login = async () => {
     const { email, password } = form;
-    api.post('/user', { email, password })
-      .then((response) => {
-        const { user } = response.data;
-        console.log(user);
-        redirect(user.dataValues.role);
-      }).catch(({ response }) => {
-        console.log(response);
-        setForm((prevState) => ({ ...prevState, userNotFound: true }));
+    // api.post('/user', { email, password })
+    //   .then((response) => {
+    //     const { user } = response.data;
+    //     console.log(user);
+    //     setUser({ ...user.dataValues });
+    //     redirect(user.dataValues.role);
+    //   }).catch(({ response }) => {
+    //     console.log(response);
+    //     setForm((prevState) => ({ ...prevState, userNotFound: true }));
+    //   });
+
+    try {
+      const response = await fetch('http://localhost:3001/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
+
+      const { user } = await response.json();
+      setUser({ ...user.dataValues });
+      redirect(user.dataValues.role);
+      console.log();
+    } catch (error) {
+      console.log(error);
+      setForm((prevState) => ({ ...prevState, userNotFound: true }));
+    }
   };
 
   useEffect(() => handleValidation(), [form.email, form.password]);
