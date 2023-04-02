@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../../store/context/UserContext';
 import api from '../../services/api';
 
 function Login() {
   const history = useHistory();
-
-  const { setUser } = useContext(UserContext);
 
   const [form, setForm] = useState({
     email: '',
@@ -47,7 +44,6 @@ function Login() {
       .then((response) => {
         const { user } = response.data;
         console.log(user);
-        setUser({ ...user.dataValues });
         redirect(user.dataValues.role);
       }).catch(({ response }) => {
         console.log(response);
