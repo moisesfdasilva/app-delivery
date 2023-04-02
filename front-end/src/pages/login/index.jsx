@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../store/context/UserContext';
-// import api from '../../services/api';
+import api from '../../services/api';
 
 function Login() {
   const history = useHistory();
@@ -34,43 +34,24 @@ function Login() {
   const redirect = (role) => {
     switch (role) {
     case 'customer':
-      history.push('/customer/products');
-      break;
+      return history.push('/customer/products');
     default:
-      history.push('/');
+      return history.push('/');
     }
   };
 
-  const login = async () => {
+  const login = () => {
     const { email, password } = form;
-    // api.post('/user', { email, password })
-    //   .then((response) => {
-    //     const { user } = response.data;
-    //     console.log(user);
-    //     setUser({ ...user.dataValues });
-    //     redirect(user.dataValues.role);
-    //   }).catch(({ response }) => {
-    //     console.log(response);
-    //     setForm((prevState) => ({ ...prevState, userNotFound: true }));
-    //   });
-
-    try {
-      const response = await fetch('http://localhost:3001/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+    api.post('/user', { email, password })
+      .then((response) => {
+        const { user } = response.data;
+        console.log(user);
+        setUser({ ...user.dataValues });
+        redirect(user.dataValues.role);
+      }).catch(({ response }) => {
+        console.log(response);
+        setForm((prevState) => ({ ...prevState, userNotFound: true }));
       });
-
-      const { user } = await response.json();
-      setUser({ ...user.dataValues });
-      redirect(user.dataValues.role);
-      console.log();
-    } catch (error) {
-      console.log(error);
-      setForm((prevState) => ({ ...prevState, userNotFound: true }));
-    }
   };
 
   useEffect(() => handleValidation(), [form.email, form.password]);
