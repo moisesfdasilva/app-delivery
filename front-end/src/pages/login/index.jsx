@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../store/context/UserContext';
-import sendLogin from '../../services/user.services';
+import api from '../../services/api';
 
 function Login() {
   const history = useHistory();
@@ -41,11 +41,15 @@ function Login() {
     }
   };
 
-  const login = async () => {
+  const login = () => {
+    const { email, password } = form;
     try {
-      const { dataValues } = await sendLogin(form.email, form.password);
-      setUser({ ...dataValues });
-      redirect(dataValues.role);
+      api.post('/user', { email, password })
+        .then((response) => {
+          const { user } = response.data;
+          setUser({ ...user.dataValues });
+          redirect(user.dataValues.role);
+        });
     } catch (error) {
       setForm((prevState) => ({ ...prevState, userNotFound: true }));
     }
