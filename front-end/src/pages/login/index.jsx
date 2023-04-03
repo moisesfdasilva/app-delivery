@@ -35,6 +35,8 @@ function Login() {
     switch (role) {
     case 'customer':
       return history.push('/customer/products');
+    case 'admin':
+      return history.push('/customer/products');
     default:
       return history.push('/');
     }
