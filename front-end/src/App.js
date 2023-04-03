@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
         <ProductProvider>
-          <Route path="/products" component={ Products } />
+          <Route path="/customer/products" component={ Products } />
         </ProductProvider>
       </Switch>
     </UserProvider>

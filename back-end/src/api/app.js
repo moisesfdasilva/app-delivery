@@ -9,4 +9,6 @@ app.use(express.json());
 app.use('/user', userRouters);
 app.use('/products', productRouters);
 
+app.use(express.static('public'));
+
 module.exports = app;
