@@ -11,7 +11,7 @@ const postLogin = async (email, password) => {
 
   const token = jwtEncode({ user });
 
-  return { token, ...user };
+  return { token, user };
 };
 
 module.exports = { postLogin };

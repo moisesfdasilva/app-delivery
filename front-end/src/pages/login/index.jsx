@@ -42,12 +42,11 @@ function Login() {
 
   const login = () => {
     const { email, password } = form;
-    api.post('/user', { email, password })
-      .then((response) => {
-        const { user } = response.data;
-        console.log(user);
-        setUser({ ...user.dataValues });
-        redirect(user.dataValues.role);
+    api.post('/login', { email, password })
+      .then(({ data }) => {
+        const { user } = data;
+        setUser({ ...user });
+        redirect(user.role);
       }).catch(({ response }) => {
         console.log(response);
         setForm((prevState) => ({ ...prevState, userNotFound: true }));
