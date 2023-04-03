@@ -35,8 +35,6 @@ function Login() {
     switch (role) {
     case 'customer':
       return history.push('/customer/products');
-    case 'admin':
-      return history.push('/customer/products');
     default:
       return history.push('/');
     }
@@ -44,11 +42,11 @@ function Login() {
 
   const login = () => {
     const { email, password } = form;
-    api.post('/login', { email, password })
+    api.post('/user', { email, password })
       .then(({ data }) => {
         const { user } = data;
-        setUser({ ...user });
         redirect(user.role);
+        setUser({ ...user });
       }).catch(({ response }) => {
         console.log(response);
         setForm((prevState) => ({ ...prevState, userNotFound: true }));
