@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-// import UserContext from '../../store/context/UserContext';
-import postLogin from '../../services/user.service';
+import UserContext from '../../store/context/UserContext';
+import api from '../../services/api';
 
 function Login() {
   const history = useHistory();
 
-  // const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const [form, setForm] = useState({
     email: '',
@@ -40,17 +40,16 @@ function Login() {
     }
   };
 
-  const login = async () => {
+  const login = () => {
     const { email, password } = form;
-    try {
-      const { data } = await postLogin('/user', { email, password });
-      const { user } = data;
-      console.log(user);
-      redirect(user.role);
-    } catch ({ response }) {
-      console.log(response.data);
-      setForm((prevState) => ({ ...prevState, userNotFound: true }));
-    }
+    api.post('/user', { email, password })
+      .then(({ data: { user } }) => {
+        setUser({ ...user });
+        redirect(user.role);
+      }).catch(({ response }) => {
+        console.log(response);
+        setForm((prevState) => ({ ...prevState, userNotFound: true }));
+      });
   };
 
   useEffect(() => handleValidation(), [form.email, form.password]);
