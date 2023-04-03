@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../App.css';
+import ProductContext from '../store/context/ProductContext';
 
 function Cards() {
+  const { getProducts } = useContext(ProductContext);
+
+  const [useProducts, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function getAllProducts() {
+      const result = await getProducts();
+      setProducts(result);
+    }
+    getAllProducts();
+  }, []);
+
+  console.log('11111', useProducts);
   return (
     <div className="ProductCard">
 
