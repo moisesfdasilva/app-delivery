@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function CustomerProducts() {
-  const [customerProducts, _setCustomerProducts] = useState({
-    name: 'Sr. Fulano',
-    custProducts: [
+function CustomerOrder() {
+  const [customerOrders, setCustomerOrders] = useState({
+    name: 'Sr. Cicrano',
+    custOrders: [
       { id: 1,
         status: 'PENDENTE',
         saleDate: '08/04/21',
@@ -23,10 +23,6 @@ function CustomerProducts() {
     ],
   });
 
-  const history = useHistory();
-
-  const orderDetails = (id) => { history.push(`/customer/orders/${id}`); };
-
   // 22-CONSTRUIR A PÁGINA
   // 23-DEVE ESTAR IGUAL AO BANCO DE DADOS
   // 24-CLICA NO CARD E VAI À TELA DE DETALHES
@@ -41,39 +37,39 @@ function CustomerProducts() {
           MEUS PEDIDOS
         </div>
         <div data-testid="customer_products__element-navbar-user-full-name">
-          { customerProducts.name }
+          { customerOrders.name }
         </div>
         <div data-testid="customer_products__element-navbar-link-logout">
           Sair
         </div>
       </nav>
       <section>
-        { customerProducts.custProducts.map((prod) => (
-          <section
-            key={ prod.id }
-            onClick={ () => orderDetails(prod.id) }
+        { customerOrders.custOrders.map((ord) => (
+          <Link
+            key={ ord.id }
+            to={ `/customer/orders/${ord.id}` }
           >
-            <div data-testid={ `customer_orders__element-order-id-${prod.id}` }>
+            <div data-testid={ `customer_orders__element-order-id-${ord.id}` }>
               <p>Pedido</p>
-              <p>{ prod.id }</p>
+              <p>{ ord.id }</p>
             </div>
-            <div data-testid={ `customer_orders__element-delivery-status-${prod.id}` }>
-              <p>{ prod.status }</p>
+            <div data-testid={ `customer_orders__element-delivery-status-${ord.id}` }>
+              <p>{ ord.status }</p>
             </div>
-            <div data-testid={ `customer_orders__element-order-date-${prod.id}` }>
-              <p>{ prod.saleDate }</p>
+            <div data-testid={ `customer_orders__element-order-date-${ord.id}` }>
+              <p>{ ord.saleDate }</p>
             </div>
-            <div data-testid={ `customer_orders__element-card-price-${prod.id}` }>
-              <p>{ prod.price }</p>
+            <div data-testid={ `customer_orders__element-card-price-${ord.id}` }>
+              <p>{ ord.price }</p>
             </div>
-            <div data-testid={ `seller_orders__element-card-address-${prod.id}` }>
-              <p>{ prod.address }</p>
+            <div data-testid={ `seller_orders__element-card-address-${ord.id}` }>
+              <p>{ ord.address }</p>
             </div>
-          </section>
+          </Link>
         )) }
       </section>
     </main>
   );
 }
 
-export default CustomerProducts;
+export default CustomerOrder;
