@@ -23,7 +23,10 @@ export default function ProductProvider({ children }) {
     useProducts,
     setProducts,
     getProducts,
-  }), [useProducts, setProducts]);
+  }), [
+    useProducts,
+    setProducts,
+  ]);
 
   return (
     <ProductContext.Provider value={ context }>
