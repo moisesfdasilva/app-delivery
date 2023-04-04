@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import TbCustOrdDetBody from '../../components/tbCustOrdDetBody';
-import TbCustOrdDetHeader from '../../components/tbCustOrdDetHeader';
+import TableOrdDetBody from '../../components/tableOrdDetBody';
+import TableOrdDetHeader from '../../components/tableOrdDetHeader';
 
 function CustomerOrderDetail() {
   const [order, setOrder] = useState({
@@ -48,7 +48,7 @@ function CustomerOrderDetail() {
         <h1>Detalhe do Pedido</h1>
       </section>
       <table>
-        <TbCustOrdDetHeader
+        <TableOrdDetHeader
           key={ order.id }
           id={ order.id }
           seller={ order.seller }
@@ -57,7 +57,7 @@ function CustomerOrderDetail() {
         />
         <tbody>
           { order.products.map(({ id, name, qt, cost, totalCost }) => (
-            <TbCustOrdDetBody
+            <TableOrdDetBody
               key={ id }
               id={ id }
               name={ name }

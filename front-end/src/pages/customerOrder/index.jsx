@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import OrderCard from '../../components/orderCard';
 
 function CustomerOrder() {
   const [customerOrders, setCustomerOrders] = useState({
@@ -23,10 +24,6 @@ function CustomerOrder() {
     ],
   });
 
-  // 22-CONSTRUIR A PÁGINA
-  // 23-DEVE ESTAR IGUAL AO BANCO DE DADOS
-  // 24-CLICA NO CARD E VAI À TELA DE DETALHES
-
   return (
     <main>
       <nav>
@@ -45,27 +42,14 @@ function CustomerOrder() {
       </nav>
       <section>
         { customerOrders.custOrders.map((ord) => (
-          <Link
+          <OrderCard
             key={ ord.id }
-            to={ `/customer/orders/${ord.id}` }
-          >
-            <div data-testid={ `customer_orders__element-order-id-${ord.id}` }>
-              <p>Pedido</p>
-              <p>{ ord.id }</p>
-            </div>
-            <div data-testid={ `customer_orders__element-delivery-status-${ord.id}` }>
-              <p>{ ord.status }</p>
-            </div>
-            <div data-testid={ `customer_orders__element-order-date-${ord.id}` }>
-              <p>{ ord.saleDate }</p>
-            </div>
-            <div data-testid={ `customer_orders__element-card-price-${ord.id}` }>
-              <p>{ ord.price }</p>
-            </div>
-            <div data-testid={ `seller_orders__element-card-address-${ord.id}` }>
-              <p>{ ord.address }</p>
-            </div>
-          </Link>
+            id={ ord.id }
+            status={ ord.status }
+            saleDate={ ord.saleDate }
+            price={ ord.price }
+            address={ ord.address }
+          />
         )) }
       </section>
     </main>
