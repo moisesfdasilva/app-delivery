@@ -11,9 +11,24 @@ const postUserLogin = async (req, res) => {
     return res.status(mapError(user.type)).json({ message: user.message });
   }
 
-  return res.status(200).json({ user });
+  return res.status(200).json(user);
+};
+
+const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  const hash = md5(password);
+  const newUser = await userService.postRegister(name, email, hash);
+
+  if (newUser.type) {
+    return res.status(newUser.type).json({ message: newUser.message });
+  }
+
+  const user = await userService.postLogin(email, hash);
+
+  return res.status(201).json(user);
 };
 
 module.exports = {
   postUserLogin,
+  registerUser,
 };
