@@ -18,11 +18,11 @@ function App() {
         </Route>
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
+        <Route exact path="/customer/orders" component={ CustomerOrder } />
+        <Route path="/customer/orders/:id" component={ CustomerOrderDetail } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
         </ProductProvider>
-        <Route exact path="/customer/orders" component={ CustomerOrder } />
-        <Route path="/customer/orders/:id" component={ CustomerOrderDetail } />
       </Switch>
     </UserProvider>
   );
