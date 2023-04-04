@@ -17,8 +17,6 @@ function Products() {
     getAllProducts();
   }, []);
 
-  console.log('11111', useProducts);
-
   return (
     <div>
       <NavBar />
