@@ -11,7 +11,7 @@ const postUserLogin = async (req, res) => {
     return res.status(mapError(user.type)).json({ message: user.message });
   }
 
-  return res.status(200).json({ user });
+  return res.status(200).json(user);
 };
 
 module.exports = {
