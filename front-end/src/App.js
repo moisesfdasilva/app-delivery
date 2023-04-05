@@ -22,6 +22,7 @@ function App() {
         <Route path="/customer/orders/:id" component={ CustomerOrderDetail } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
+          <Route path="/customer/checkout" />
         </ProductProvider>
       </Switch>
     </UserProvider>
