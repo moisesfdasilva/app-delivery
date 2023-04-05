@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import '../App.css';
 
 function NavBar() {
+  const history = useHistory();
   return (
     <header className="Navbar">
       <button
@@ -14,6 +16,7 @@ function NavBar() {
       <button
         data-testid="customer_products__element-navbar-link-orders"
         type="button"
+        onClick={ () => history.push('/customer/orders') }
       >
         Meus Pedidos
       </button>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
-function OrderCard({ id, status, saleDate, price, address }) {
+function OrderCard({ id, status, saleDate, totalPrice, address }) {
   return (
     <Link
       to={ `/customer/orders/${id}` }
@@ -19,7 +19,7 @@ function OrderCard({ id, status, saleDate, price, address }) {
         <p>{ saleDate }</p>
       </div>
       <div data-testid={ `customer_orders__element-card-price-${id}` }>
-        <p>{ price }</p>
+        <p>{ totalPrice }</p>
       </div>
       <div data-testid={ `seller_orders__element-card-address-${id}` }>
         <p>{ address }</p>
@@ -32,7 +32,7 @@ OrderCard.propTypes = {
   id: PropTypes.number,
   status: PropTypes.string,
   saleDate: PropTypes.string,
-  price: PropTypes.string,
+  totalPrice: PropTypes.string,
   address: PropTypes.string,
 }.isRequired;
 
