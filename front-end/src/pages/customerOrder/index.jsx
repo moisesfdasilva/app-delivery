@@ -8,15 +8,14 @@ function CustomerOrder() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    async function getAllProducts() {
+    async function getAllOrders() {
+      // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
       const { data } = await api.get('/order/3');
       const newOrders = Object.values(data.orders);
       setOrders(newOrders);
     }
-    getAllProducts();
+    getAllOrders();
   }, []);
-
-  console.log(user);
 
   return (
     <main>

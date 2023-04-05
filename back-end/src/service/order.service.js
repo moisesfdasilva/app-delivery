@@ -18,7 +18,6 @@ const getCustomerOrderDetails = (orderId) => Sales.findOne({
     {
       model: Products,
       as: 'products',
-      // attributes: { exclude: ['id', 'email', 'password', 'role'] },
     },
   ],
 });

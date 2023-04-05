@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TableOrdDetBody({ id, name, qt, cost, totalCost }) {
+function TableOrdDetBody({ id, name, quantity, price }) {
+  const totalCost = quantity * Number(price);
   return (
     <tr>
       <td data-testid={ `customer_order_details__element-order-table-item-number-${id}` }>
@@ -11,10 +12,10 @@ function TableOrdDetBody({ id, name, qt, cost, totalCost }) {
         { name }
       </td>
       <td data-testid={ `customer_order_details__element-order-table-quantity-${id}` }>
-        { qt }
+        { quantity }
       </td>
       <td data-testid={ `customer_order_details__element-order-table-unit-price-${id}` }>
-        { cost }
+        { price }
       </td>
       <td data-testid={ `customer_order_details__element-order-table-sub-total-${id}` }>
         { totalCost }
@@ -26,9 +27,8 @@ function TableOrdDetBody({ id, name, qt, cost, totalCost }) {
 TableOrdDetBody.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
-  qt: PropTypes.number,
-  cost: PropTypes.string,
-  totalCost: PropTypes.string,
+  quantity: PropTypes.number,
+  price: PropTypes.string,
 }.isRequired;
 
 export default TableOrdDetBody;

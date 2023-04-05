@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 function TableOrdDetHeader({ id, seller, saleDate, status }) {
   const testId = 'customer_order_details__element-order-details-label-';
+  const TEN = 10;
   return (
     <thead>
       <tr>
@@ -13,7 +14,7 @@ function TableOrdDetHeader({ id, seller, saleDate, status }) {
           { `P. Vend: ${seller}` }
         </th>
         <th data-testid={ `${testId}order-date` }>
-          { saleDate }
+          { saleDate.slice(0, TEN) }
         </th>
         <th
           data-testid={ `${testId}delivery-status-${id}` }

@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import TableOrdDetBody from '../../components/tableOrdDetBody';
 import TableOrdDetHeader from '../../components/tableOrdDetHeader';
+import api from '../../services/api';
 
 function CustomerOrderDetail() {
   const [order, setOrder] = useState({
-    id: 1,
-    name: 'Sr. Cicrano',
-    price: 'R$ 23,80',
-    seller: 'Sr. Fulana',
-    saleDate: '08/04/21',
-    status: 'PENDENTE',
-    products: [
-      {
-        id: 1,
-        name: 'Skol Lata 250ml',
-        qt: 4,
-        cost: 'R$ 2,20',
-        totalCost: 'R$8,80',
-      },
-      {
-        id: 2,
-        name: 'Heineken 600ml',
-        qt: 2,
-        cost: 'R$ 7,50',
-        totalCost: 'R$15,00',
-      },
-    ],
+    loading: true,
   });
+
+  useEffect(() => {
+    async function getOrder() {
+      // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
+      const { data } = await api.get('/order/details/1');
+      const newOrder = data.order;
+      setOrder(newOrder);
+    }
+    getOrder();
+  }, []);
+
+  if (order.loading) { return <h1>LOADING...</h1>; }
   return (
     <>
       <nav>
@@ -38,7 +29,7 @@ function CustomerOrderDetail() {
           MEUS PEDIDOS
         </div>
         <div data-testid="customer_products__element-navbar-user-full-name">
-          { order.name }
+          { order.user.name }
         </div>
         <div data-testid="customer_products__element-navbar-link-logout">
           Sair
@@ -51,25 +42,24 @@ function CustomerOrderDetail() {
         <TableOrdDetHeader
           key={ order.id }
           id={ order.id }
-          seller={ order.seller }
+          seller={ order.seller.name }
           saleDate={ order.saleDate }
           status={ order.status }
         />
         <tbody>
-          { order.products.map(({ id, name, qt, cost, totalCost }) => (
+          { order.products.map(({ id, name, SalesProducts, price }) => (
             <TableOrdDetBody
               key={ id }
               id={ id }
               name={ name }
-              qt={ qt }
-              cost={ cost }
-              totalCost={ totalCost }
+              quantity={ SalesProducts.quantity }
+              price={ price }
             />
           )) }
         </tbody>
       </table>
       <section>
-        <h1>{ order.price }</h1>
+        <h1>{ order.totalPrice }</h1>
       </section>
     </>
   );
