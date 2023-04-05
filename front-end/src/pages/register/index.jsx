@@ -42,7 +42,7 @@ function Register() {
       const { data } = await api.post('/register', { name, email, password });
       if (data.token) {
         localStorage.setItem('user', JSON.stringify({ ...data.user }));
-        setUser({ ...data.dataValues });
+        setUser({ ...data.user });
         history.push('/customer/products');
       } else {
         setForm((prevState) => ({ ...prevState, userFound: true }));
