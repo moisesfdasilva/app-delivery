@@ -6,6 +6,7 @@ import './App.css';
 import Login from './pages/login';
 import Register from './pages/register';
 import Products from './pages/products';
+import Checkout from './pages/checkout/checkout';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/register" component={ Register } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
+          <Route path="/customer/checkout" component={ Checkout } />
         </ProductProvider>
       </Switch>
     </UserProvider>
