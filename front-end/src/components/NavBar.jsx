@@ -24,12 +24,13 @@ function NavBar() {
         Cliente
       </p>
 
-      <button
+      <Link
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
+        to="/"
       >
         Sair
-      </button>
+      </Link>
 
     </header>
   );

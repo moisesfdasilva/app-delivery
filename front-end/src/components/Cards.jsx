@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import '../App.css';
-// import ProductContext from '../store/context/ProductContext';
+import ProductContext from '../store/context/ProductContext';
 
 function Cards({ price, urlImage, name, id }) {
   const [qtdProducts, setQtdProducts] = useState(0);
-  const [valorTotal, setValorTotal] = useState(0);
+  const { valorTotal, setValorTotal } = useContext(ProductContext);
 
   const handleIncrement = () => {
     setQtdProducts(qtdProducts + 1);
@@ -13,9 +13,20 @@ function Cards({ price, urlImage, name, id }) {
   };
 
   const handleDecrement = () => {
+    if (qtdProducts === 0) return;
     setQtdProducts(qtdProducts - 1);
     setValorTotal(valorTotal - price * 1);
   };
+
+  const handleChange = (event) => {
+    console.log(event);
+    setQtdProducts(event.target.value);
+    setValorTotal(valorTotal + (price * event.target.value));
+  };
+
+  useEffect(() => {
+    localStorage.setItem('valorTotal', JSON.stringify(valorTotal));
+  }, [valorTotal]);
 
   return (
     <div className="ProductCard">
@@ -56,6 +67,7 @@ function Cards({ price, urlImage, name, id }) {
         type="number"
         name="quantidade"
         value={ qtdProducts }
+        onChange={ handleChange }
       />
 
       <button

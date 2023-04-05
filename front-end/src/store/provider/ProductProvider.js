@@ -7,6 +7,7 @@ export default function ProductProvider({ children }) {
   const [useProducts, setProducts] = useState({
     products: [],
   });
+  const [valorTotal, setValorTotal] = useState(0);
 
   async function getProducts() {
     try {
@@ -23,9 +24,13 @@ export default function ProductProvider({ children }) {
     useProducts,
     setProducts,
     getProducts,
+    valorTotal,
+    setValorTotal,
   }), [
     useProducts,
     setProducts,
+    valorTotal,
+    setValorTotal,
   ]);
 
   return (
