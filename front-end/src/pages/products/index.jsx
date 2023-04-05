@@ -3,6 +3,7 @@ import ProductContext from '../../store/context/ProductContext';
 import '../../App.css';
 import NavBar from '../../components/NavBar';
 import Cards from '../../components/Cards';
+import TotalProduct from '../../components/TotalProduct';
 
 function Products() {
   const { getProducts } = useContext(ProductContext);
@@ -16,8 +17,6 @@ function Products() {
     }
     getAllProducts();
   }, []);
-
-  console.log('11111', useProducts);
 
   return (
     <div>
@@ -36,6 +35,7 @@ function Products() {
             ))
         }
       </div>
+      <TotalProduct />
     </div>
   );
 }

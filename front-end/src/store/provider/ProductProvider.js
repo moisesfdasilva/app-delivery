@@ -7,6 +7,7 @@ export default function ProductProvider({ children }) {
   const [useProducts, setProducts] = useState({
     products: [],
   });
+  const [valorTotal, setValorTotal] = useState(0);
 
   async function getProducts() {
     try {
@@ -23,7 +24,14 @@ export default function ProductProvider({ children }) {
     useProducts,
     setProducts,
     getProducts,
-  }), [useProducts, setProducts]);
+    valorTotal,
+    setValorTotal,
+  }), [
+    useProducts,
+    setProducts,
+    valorTotal,
+    setValorTotal,
+  ]);
 
   return (
     <ProductContext.Provider value={ context }>
