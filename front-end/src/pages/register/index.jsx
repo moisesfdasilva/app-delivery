@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import UserContext from '../../store/context/UserContext';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import UserContext from '../../store/context/UserContext';
+import api from '../../services/api';
 
 function Register() {
-  // const history = useHistory();
+  const history = useHistory();
+  const { setUser } = useContext(UserContext);
 
   const [form, setForm] = useState({
     name: '',
     email: '',
     password: '',
     disabled: true,
+    userFound: false,
   });
 
   const handleChange = ({ target }) => {
@@ -31,6 +34,23 @@ function Register() {
   };
 
   useEffect(() => handleValidation(), [form.name, form.email, form.password]);
+
+  const handleRegister = async () => {
+    const { name, email, password } = form;
+
+    try {
+      const { data } = await api.post('/register', { name, email, password });
+      if (data.token) {
+        localStorage.setItem('user', JSON.stringify({ ...data.user }));
+        setUser({ ...data.user });
+        history.push('/customer/products');
+      } else {
+        setForm((prevState) => ({ ...prevState, userFound: true }));
+      }
+    } catch (error) {
+      setForm((prevState) => ({ ...prevState, userFound: true }));
+    }
+  };
 
   return (
     <div>
@@ -73,10 +93,17 @@ function Register() {
           type="button"
           data-testid="common_register__button-register"
           disabled={ form.disabled }
+          onClick={ handleRegister }
         >
           CADASTRAR
         </button>
       </form>
+      {form.userFound
+      && (
+        <p data-testid="common_register__element-invalid_register">
+          Você já possui um cadastro
+        </p>
+      )}
     </div>
   );
 }

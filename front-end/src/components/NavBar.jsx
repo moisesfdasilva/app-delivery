@@ -1,15 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
 
 function NavBar() {
   return (
     <header className="Navbar">
-      <button
+      <Link
+        to="/customer/products"
         data-testid="customer_products__element-navbar-link-products"
         type="button"
       >
         Produtos
-      </button>
+      </Link>
 
       <button
         data-testid="customer_products__element-navbar-link-orders"
@@ -22,12 +24,13 @@ function NavBar() {
         Cliente
       </p>
 
-      <button
+      <Link
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
+        to="/"
       >
         Sair
-      </button>
+      </Link>
 
     </header>
   );

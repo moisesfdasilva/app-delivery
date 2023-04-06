@@ -7,27 +7,7 @@ export default function ProductProvider({ children }) {
   const [useProducts, setProducts] = useState({
     products: [],
   });
-
-  const [sales, setSales] = useState([
-    {
-      name: 'Skol Lata 250ml',
-      quantity: 3,
-      unitPrice: 2.20,
-      subTotal: 10,
-    },
-    {
-      name: 'Brahma 600ml',
-      quantity: 10,
-      unitPrice: 7.50,
-      subTotal: 10,
-    },
-    {
-      name: 'Skol Beats Senses 269ml',
-      quantity: 5,
-      unitPrice: 3.57,
-      subTotal: 10,
-    },
-  ]);
+  const [valorTotal, setValorTotal] = useState(0);
 
   async function getProducts() {
     try {
@@ -44,9 +24,14 @@ export default function ProductProvider({ children }) {
     useProducts,
     setProducts,
     getProducts,
-    sales,
-    setSales,
-  }), [useProducts, setProducts]);
+    valorTotal,
+    setValorTotal,
+  }), [
+    useProducts,
+    setProducts,
+    valorTotal,
+    setValorTotal,
+  ]);
 
   return (
     <ProductContext.Provider value={ context }>
