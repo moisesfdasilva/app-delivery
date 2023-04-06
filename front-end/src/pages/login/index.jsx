@@ -56,8 +56,6 @@ function Login() {
 
   useEffect(() => handleValidation(), [form.email, form.password]);
 
-  // useEffect(() => () => localStorage.setItem('user', JSON.stringify({ ...user })), []);
-
   return (
     <div>
       <form>

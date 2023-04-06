@@ -4,12 +4,10 @@ import ProductContext from '../../store/context/ProductContext';
 import '../../App.css';
 import NavBar from '../../components/NavBar';
 import Cards from '../../components/Cards';
-// import UserContext from '../../store/context/UserContext';
 import api from '../../services/api';
 
 function Products() {
   const { getProducts } = useContext(ProductContext);
-  // const { user } = useContext(UserContext);
 
   const history = useHistory();
   const [useProducts, setProducts] = useState([]);
@@ -28,7 +26,6 @@ function Products() {
   async function getAllProducts() {
     const result = await getProducts();
     setProducts(result);
-    // localStorage.setItem('user', JSON.stringify({ ...user }));
   }
 
   useEffect(() => {
