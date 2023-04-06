@@ -5,22 +5,22 @@ import '../App.css';
 function NavBar() {
   const [user, setUser] = useState({
     name: '',
-});
+  });
 
-const history = useHistory();
+  const history = useHistory();
 
-const getUser = () => {
-  const data = localStorage.getItem('user');
+  const getUser = () => {
+    const data = localStorage.getItem('user');
     const result = JSON.parse(data);
-    setUser({ ...result })
-};
+    setUser({ ...result });
+  };
 
-const logout = () => {
-  localStorage.removeItem('user');
-  return history.push('/');
-};
+  const logout = () => {
+    localStorage.removeItem('user');
+    return history.push('/');
+  };
 
-useEffect(() => getUser, []);
+  useEffect(() => getUser, []);
 
   return (
     <header className="Navbar">
