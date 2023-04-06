@@ -11,7 +11,7 @@ function CustomerOrder() {
   useEffect(() => {
     async function getAllOrders() {
       // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
-      const { data } = await api.get('/order/3');
+      const { data } = await api.get('/order/customer/3');
       const newOrders = Object.values(data.orders);
       setOrders(newOrders);
     }
