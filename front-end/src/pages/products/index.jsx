@@ -4,6 +4,7 @@ import ProductContext from '../../store/context/ProductContext';
 import '../../App.css';
 import NavBar from '../../components/NavBar';
 import Cards from '../../components/Cards';
+import TotalProduct from '../../components/TotalProduct';
 import api from '../../services/api';
 
 function Products() {
