@@ -24,13 +24,13 @@ function NavBar() {
 
   return (
     <header className="Navbar">
-      <Link
+      <button
         to="/customer/products"
         data-testid="customer_products__element-navbar-link-products"
         type="button"
       >
         Produtos
-      </Link>
+      </button>
 
       <button
         data-testid="customer_products__element-navbar-link-orders"
@@ -44,13 +44,13 @@ function NavBar() {
         { user.name }
       </p>
 
-      <Link
+      <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
         onClick={ logout }
       >
         Sair
-      </Link>
+      </button>
 
     </header>
   );
