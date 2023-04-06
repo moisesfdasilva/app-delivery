@@ -6,7 +6,6 @@ function NavBar() {
   const [user, setUser] = useState({
     name: '',
   });
-  // console.log(user.name);
 
   const history = useHistory();
 
