@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import OrderCard from '../../components/orderCard';
 import api from '../../services/api';
 import UserContext from '../../store/context/UserContext';
@@ -16,6 +17,9 @@ function CustomerOrder() {
     }
     getAllOrders();
   }, []);
+
+  const history = useHistory();
+  const seller = (history.location.pathname).includes('seller');
 
   return (
     <main>
@@ -42,6 +46,7 @@ function CustomerOrder() {
             saleDate={ ord.saleDate }
             totalPrice={ ord.totalPrice }
             address={ `${ord.deliveryAddress} - ${ord.deliveryNumber}` }
+            seller={ seller }
           />
         )) }
       </section>
