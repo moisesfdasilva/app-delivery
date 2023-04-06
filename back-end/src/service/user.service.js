@@ -1,5 +1,5 @@
 const { Users } = require('../database/models');
-const { jwtEncode, jwtDecode } = require('../utils/jwtToken/jwtEncode');
+const { jwtEncode, jwtDecode } = require('../utils/jwtToken/jwt');
 
 const verifyTokenCustomer = (token) => {
   try {
