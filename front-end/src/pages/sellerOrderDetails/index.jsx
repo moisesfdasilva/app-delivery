@@ -4,7 +4,7 @@ import TableOrdDetBody from '../../components/tableOrdDetBody';
 import TableOrdDetHeader from '../../components/tableOrdDetHeader';
 import api from '../../services/api';
 
-function CustomerOrderDetails() {
+function SellerOrderDetails() {
   const [order, setOrder] = useState({
     loading: true,
   });
@@ -65,7 +65,7 @@ function CustomerOrderDetails() {
         </tbody>
       </table>
       <section>
-        <h1 data-testid="customer_order_details__element-order-total-price">
+        <h1 data-testid="seller_order_details__element-order-total-price">
           { order.totalPrice }
         </h1>
       </section>
@@ -73,4 +73,4 @@ function CustomerOrderDetails() {
   );
 }
 
-export default CustomerOrderDetails;
+export default SellerOrderDetails;

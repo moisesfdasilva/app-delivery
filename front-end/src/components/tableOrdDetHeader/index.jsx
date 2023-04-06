@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TableOrdDetHeader({ id, seller, saleDate, status }) {
-  const testId = 'customer_order_details__element-order-details-label-';
+function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
+  const route = seller ? 'seller' : 'customer';
+  const testId = `${route}_order_details__element-order-details-label-`;
   const TEN = 10;
   return (
     <thead>
@@ -10,9 +11,11 @@ function TableOrdDetHeader({ id, seller, saleDate, status }) {
         <th data-testid={ `${testId}order-id` }>
           { `PEDIDO ${id}` }
         </th>
-        <th data-testid={ `${testId}seller-name` }>
-          { `P. Vend: ${seller}` }
-        </th>
+        { !seller && (
+          <th data-testid={ `${testId}seller-name` }>
+            { `P. Vend: ${sellerName}` }
+          </th>
+        ) }
         <th data-testid={ `${testId}order-date` }>
           { saleDate.slice(0, TEN) }
         </th>
@@ -21,9 +24,21 @@ function TableOrdDetHeader({ id, seller, saleDate, status }) {
         >
           { status }
         </th>
-        <th data-testid="button-delivery-check">
-          MARCAR COMO ENTREGUE
-        </th>
+        { seller && (
+          <th data-testid="seller_order_details__button-preparing-check">
+            PREPARAR PEDIDO
+          </th>
+        ) }
+        { !seller && (
+          <th data-testid="button-delivery-check">
+            MARCAR COMO ENTREGUE
+          </th>
+        ) }
+        { seller && (
+          <th data-testid="seller_order_details__button-dispatch-check">
+            SAIU PARA ENTREGA
+          </th>
+        ) }
       </tr>
       <tr>
         <th>Item</th>
@@ -38,9 +53,10 @@ function TableOrdDetHeader({ id, seller, saleDate, status }) {
 
 TableOrdDetHeader.propTypes = {
   id: PropTypes.number,
-  seller: PropTypes.string,
+  sellerName: PropTypes.string,
   saleDate: PropTypes.string,
   status: PropTypes.string,
+  seller: PropTypes.bool,
 }.isRequired;
 
 export default TableOrdDetHeader;

@@ -9,6 +9,7 @@ import Products from './pages/products';
 import CustomerOrder from './pages/customerOrder';
 import CustomerOrderDetail from './pages/customerOrderDetails';
 import SellerOrder from './pages/sellerOrder';
+import SellerOrderDetails from './pages/sellerOrderDetails';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="/register" component={ Register } />
         <Route exact path="/customer/orders" component={ CustomerOrder } />
         <Route path="/customer/orders/:id" component={ CustomerOrderDetail } />
-        <Route path="/seller/orders" component={ SellerOrder } />
+        <Route exact path="/seller/orders" component={ SellerOrder } />
+        <Route path="/seller/orders/:id" component={ SellerOrderDetails } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
           <Route path="/customer/checkout" />

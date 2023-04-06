@@ -37,6 +37,7 @@ OrderCard.propTypes = {
   saleDate: PropTypes.string,
   totalPrice: PropTypes.string,
   address: PropTypes.string,
+  seller: PropTypes.bool,
 }.isRequired;
 
 export default OrderCard;
