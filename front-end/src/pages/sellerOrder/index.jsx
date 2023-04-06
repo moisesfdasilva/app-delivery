@@ -1,26 +1,25 @@
-import React, { useContext } from 'react';
-// import React, { useState, useEffect, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import OrderCard from '../../components/orderCard';
-// import api from '../../services/api';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import OrderCard from '../../components/orderCard';
+import api from '../../services/api';
 import UserContext from '../../store/context/UserContext';
 
 function SellerOrder() {
-  // const history = useHistory();
-  // const seller = (history.location.pathname).includes('seller');
-
-  // const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
   const { user } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   async function getAllOrders() {
-  //     // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
-  //     const { data } = await api.get('/order/3');
-  //     const newOrders = Object.values(data.orders);
-  //     setOrders(newOrders);
-  //   }
-  //   getAllOrders();
-  // }, []);
+  useEffect(() => {
+    async function getAllOrders() {
+      // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
+      const { data } = await api.get('/order/3');
+      const newOrders = Object.values(data.orders);
+      setOrders(newOrders);
+    }
+    getAllOrders();
+  }, []);
+
+  const history = useHistory();
+  const seller = (history.location.pathname).includes('seller');
 
   return (
     <main>
@@ -36,7 +35,7 @@ function SellerOrder() {
         </div>
       </nav>
       <section>
-        {/* { orders.map((ord) => (
+        { orders.map((ord) => (
           <OrderCard
             key={ ord.id }
             id={ ord.id }
@@ -46,7 +45,7 @@ function SellerOrder() {
             address={ `${ord.deliveryAddress} - ${ord.deliveryNumber}` }
             seller={ seller }
           />
-        )) } */}
+        )) }
       </section>
     </main>
   );

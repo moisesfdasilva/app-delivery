@@ -22,7 +22,10 @@ const getCustomerOrderDetails = (orderId) => Sales.findOne({
   ],
 });
 
+const getAllSellerOrders = (sellerId) => Sales.findAll({ where: { sellerId } });
+
 module.exports = {
   getAllCustomerOrders,
   getCustomerOrderDetails,
+  getAllSellerOrders,
 };

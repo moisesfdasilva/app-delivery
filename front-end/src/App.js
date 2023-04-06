@@ -8,7 +8,7 @@ import Register from './pages/register';
 import Products from './pages/products';
 import CustomerOrder from './pages/customerOrder';
 import CustomerOrderDetail from './pages/customerOrderDetails';
-import SellerOrder from './pages/selerOrder';
+import SellerOrder from './pages/sellerOrder';
 
 function App() {
   return (

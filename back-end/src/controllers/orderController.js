@@ -12,7 +12,14 @@ const getCustomerOrderDetails = async (req, res) => {
   return res.status(200).json({ order });
 };
 
+const getAllSellerOrders = async (req, res) => {
+  const sellerId = req.params.id;
+  const orders = await ordersService.getAllSellerOrders(sellerId);
+  return res.status(200).json({ orders });
+};
+
 module.exports = {
   getAllCustomerOrders,
   getCustomerOrderDetails,
+  getAllSellerOrders,
 };
