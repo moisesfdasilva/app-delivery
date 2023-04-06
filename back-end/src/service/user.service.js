@@ -1,5 +1,14 @@
 const { Users } = require('../database/models');
-const jwtEncode = require('../utils/jwtToken/jwtEncode');
+const { jwtEncode, jwtDecode } = require('../utils/jwtToken/jwtEncode');
+
+const verifyTokenCustomer = (token) => {
+  try {
+    jwtDecode(token);
+    return { status: 200, message: 'OK' };
+  } catch (error) {
+    return { status: 401, message: 'NOT_AUTHORIZED' };
+  }
+};
 
 const postLogin = async (email, password) => {
   const user = await Users.findOne({
@@ -8,10 +17,10 @@ const postLogin = async (email, password) => {
   });
 
   if (!user) return { type: 'USER_NOT_FOUND', message: 'Not found' };
+console.log('usuario', user);
+  const token = jwtEncode(user.dataValues);
 
-  const token = jwtEncode({ user });
-
-  return { token, user };
+  return { user, token };
 };
 
 const postRegister = async (name, email, password) => {
@@ -27,4 +36,8 @@ const postRegister = async (name, email, password) => {
   return { type: null, message: 'Created' };
 };
 
-module.exports = { postLogin, postRegister };
+module.exports = {
+  postLogin,
+  postRegister,
+  verifyTokenCustomer,
+};
