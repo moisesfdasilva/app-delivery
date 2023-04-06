@@ -53,6 +53,7 @@ function Products() {
             ))
         }
       </div>
+      <TotalProduct />
     </div>
   );
 }

@@ -24,16 +24,18 @@ function NavBar() {
 
   return (
     <header className="Navbar">
-      <button
+      <Link
+        to="/customer/products"
         data-testid="customer_products__element-navbar-link-products"
         type="button"
       >
         Produtos
-      </button>
+      </Link>
 
       <button
         data-testid="customer_products__element-navbar-link-orders"
         type="button"
+        onClick={ () => history.push('/customer/orders') }
       >
         Meus Pedidos
       </button>
@@ -42,13 +44,13 @@ function NavBar() {
         { user.name }
       </p>
 
-      <button
+      <Link
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
         onClick={ logout }
       >
         Sair
-      </button>
+      </Link>
 
     </header>
   );
