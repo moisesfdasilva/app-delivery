@@ -6,7 +6,7 @@ import './App.css';
 import Login from './pages/login';
 import Register from './pages/register';
 import Products from './pages/products';
-import Checkout from './pages/checkout/checkout';
+import Checkout from './pages/checkout';
 
 function App() {
   return (

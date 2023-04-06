@@ -4,7 +4,6 @@ import TableElement from './components/tableElement';
 import ProductContext from '../../store/context/ProductContext';
 
 function Checkout() {
-
   const { sales, setSales } = useContext(ProductContext);
 
   const remove = (number) => {
@@ -12,7 +11,7 @@ function Checkout() {
     sales.splice(index, 1);
     console.log(sales);
     setSales(sales);
-  }
+  };
 
   return (
     <div>
@@ -41,28 +40,34 @@ function Checkout() {
             ))}
           </tbody>
         </table>
-        <h3 data-testid="customer_checkout__element-order-total-price" >Total: ...</h3>
+        <h3 data-testid="customer_checkout__element-order-total-price">Total: ...</h3>
       </div>
       <div>
         <h2>Detalhes e Endereço para Entrega</h2>
         <form>
-          <label>
+          <label htmlFor="seller">
             P. Vendedora Responsavel
-            <select data-testid="customer_checkout__select-seller">
+            <select id="seller" data-testid="customer_checkout__select-seller">
               <option value="josé">
                 josé
               </option>
             </select>
           </label>
-          <label data-testid="customer_checkout__input-address">
+          <label
+            htmlFor="address"
+            data-testid="customer_checkout__input-address"
+          >
             Endereço
-            <input type='text' />
+            <input id="address" type="text" />
           </label>
-          <label data-testid="customer_checkout__input-address-number">
+          <label
+            htmlFor="address-number"
+            data-testid="customer_checkout__input-address-number"
+          >
             Numero
-            <input type='number' />
+            <input id="address-number" type="number" />
           </label>
-          <button data-testid="customer_checkout__button-submit-order" type='button'>
+          <button data-testid="customer_checkout__button-submit-order" type="button">
             Finalizar Pedido
           </button>
         </form>
