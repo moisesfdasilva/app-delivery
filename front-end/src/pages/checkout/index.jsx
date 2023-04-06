@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import NavBar from '../../components/NavBar';
 import TableElement from './components/tableElement';
 import ProductContext from '../../store/context/ProductContext';
+import THead from './components/thead';
+import Select from './components/select';
 
 function Checkout() {
   const { sales, setSales } = useContext(ProductContext);
@@ -13,22 +15,16 @@ function Checkout() {
     setSales(sales);
   };
 
+  const header = ['Item', 'Descrição', 'Quantidade',
+    'Valor Unitario', 'Sub-total', 'Remover Item'];
+
   return (
     <div>
       <NavBar />
       <div>
         <h2>Finalizar Pedidos</h2>
         <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Descrição</th>
-              <th>Quantidade</th>
-              <th>Valor Unitario</th>
-              <th>Sub-total</th>
-              <th>Remover Item</th>
-            </tr>
-          </thead>
+          <THead header={ header } />
           <tbody>
             { sales.map((element, index) => (
               <TableElement
@@ -45,14 +41,11 @@ function Checkout() {
       <div>
         <h2>Detalhes e Endereço para Entrega</h2>
         <form>
-          <label htmlFor="seller">
-            P. Vendedora Responsavel
-            <select id="seller" data-testid="customer_checkout__select-seller">
-              <option value="josé">
-                josé
-              </option>
-            </select>
-          </label>
+          <Select
+            id="saller"
+            dataTest="customer_checkout__select-seller"
+            options={ ['josé', 'ronaldo', 'pele'] }
+          />
           <label
             htmlFor="address"
             data-testid="customer_checkout__input-address"
