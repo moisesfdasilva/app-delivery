@@ -6,6 +6,7 @@ function NavBar() {
   const [user, setUser] = useState({
     name: '',
   });
+  // console.log(user.name);
 
   const history = useHistory();
 
@@ -20,7 +21,7 @@ function NavBar() {
     return history.push('/');
   };
 
-  useEffect(() => getUser, []);
+  useEffect(() => getUser(), []);
 
   return (
     <header className="Navbar">
