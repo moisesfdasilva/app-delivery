@@ -7,6 +7,8 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Products from './pages/products';
 import Checkout from './pages/checkout';
+import CustomerOrder from './pages/customerOrder';
+import CustomerOrderDetail from './pages/customerOrderDetails';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         </Route>
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
+        <Route exact path="/customer/orders" component={ CustomerOrder } />
+        <Route path="/customer/orders/:id" component={ CustomerOrderDetail } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
           <Route path="/customer/checkout" component={ Checkout } />

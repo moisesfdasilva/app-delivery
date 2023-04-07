@@ -31,8 +31,8 @@
 
 .ProductCard {
   filter: drop-shadow(px 4px 4px rgba(0, 0, 0, 0.25));
-  height: 486px;
-  left: 1315px;
+  height: 250px;
+  left: 700px;
 
   /* position: absolute; */
   top: 0 px;

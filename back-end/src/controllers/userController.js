@@ -28,7 +28,21 @@ const registerUser = async (req, res) => {
   return res.status(201).json(user);
 };
 
+const getUser = async (req, res) => {
+  const { email } = req.body;
+  const data = await userService.postLogin(email);
+  res.status(200).json(data);
+};
+
+const verifyTokenCustomer = (req, res) => {
+  const { authorization } = req.headers;
+  const result = userService.verifyTokenCustomer(authorization);
+  res.status(result.status).json({ message: result.message });
+};
+
 module.exports = {
   postUserLogin,
   registerUser,
+  getUser,
+  verifyTokenCustomer,
 };
