@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ProductContext from '../store/context/ProductContext';
-import '../App.css';
 
 function TotalProduct() {
   const history = useHistory();
@@ -15,7 +14,7 @@ function TotalProduct() {
       setBtnDisabled(true);
     }
 
-    localStorage.setItem('valorTotal', JSON.stringify(valorTotal));
+    localStorage.setItem('valorTotal', JSON.stringify(valorTotal.toFixed(2)));
     localStorage.setItem('carrinho', JSON.stringify(useCar));
   }, [valorTotal, useCar]);
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TableElement({ product, number, remove }) {
-  const { name, quantity, price } = product;
+function TableElement({ product, number }) {
+  const { name, quantity, price, remove } = product;
   const subTotal = Number(price) * quantity;
 
   return (
@@ -10,7 +10,7 @@ function TableElement({ product, number, remove }) {
       <td
         data-testid={ `customer_checkout__element-order-table-item-number-${number}` }
       >
-        { number }
+        { number + 1 }
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-name-${number}` }
@@ -35,7 +35,7 @@ function TableElement({ product, number, remove }) {
       <td
         data-testid={ `customer_checkout__element-order-table-remove-${number}` }
       >
-        <button type="button" onClick={ () => remove(number) }>
+        <button type="button" onClick={ () => remove(number, subTotal) }>
           Remover
         </button>
       </td>
@@ -48,9 +48,9 @@ TableElement.propTypes = {
     name: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
     price: PropTypes.string.isRequired,
+    remove: PropTypes.func.isRequired,
   }).isRequired,
   number: PropTypes.number.isRequired,
-  remove: PropTypes.func.isRequired,
 };
 
 export default TableElement;

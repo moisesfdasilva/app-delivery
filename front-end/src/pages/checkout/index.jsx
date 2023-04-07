@@ -1,20 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import NavBar from '../../components/NavBar';
 import TableElement from './components/tableElement';
-import ProductContext from '../../store/context/ProductContext';
 import THead from './components/thead';
 import Select from './components/select';
 
 function Checkout() {
-  const { useCar, setCar } = useContext(ProductContext);
   const carShop = JSON.parse(localStorage.getItem('carrinho'));
+  const valorTotal = JSON.parse(localStorage.getItem('valorTotal'));
+  const [car, setCar] = useState(carShop);
 
-  const remove = (number) => {
-    useCar.splice(number, 1);
-    console.log(useCar);
-    setCar(useCar);
-    console.log(carShop);
-  };
+  function remove(number, subTotal) {
+    const removeProduct = car.filter((_e, index) => index !== number);
+    const valorFinal = Number(valorTotal) - subTotal;
+    localStorage.setItem('valorTotal', JSON.stringify(valorFinal.toFixed(2)));
+    localStorage.setItem('carrinho', JSON.stringify(removeProduct));
+    setCar(removeProduct);
+  }
 
   const header = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitario', 'Sub-total', 'Remover Item'];
@@ -27,17 +28,18 @@ function Checkout() {
         <table>
           <THead header={ header } />
           <tbody>
-            { carShop.map((element, index) => (
+            { car.map((element, index) => (
               <TableElement
                 key={ index }
-                product={ element }
+                product={ { ...element, remove } }
                 number={ index }
-                remove={ remove }
               />
             ))}
           </tbody>
         </table>
-        <h3 data-testid="customer_checkout__element-order-total-price">Total: ...</h3>
+        <h3 data-testid="customer_checkout__element-order-total-price">
+          { `${Number(valorTotal).toFixed(2).replace('.', ',')}` }
+        </h3>
       </div>
       <div>
         <h2>Detalhes e Endereço para Entrega</h2>
