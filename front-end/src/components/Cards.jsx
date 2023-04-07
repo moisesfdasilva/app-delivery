@@ -1,32 +1,38 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import '../App.css';
 import ProductContext from '../store/context/ProductContext';
 
 function Cards({ price, urlImage, name, id }) {
-  const [qtdProducts, setQtdProducts] = useState(0);
-  const { valorTotal, setValorTotal } = useContext(ProductContext);
+  const { valorTotal, setValorTotal, addCar, removeCar } = useContext(ProductContext);
+  const [product, setProduct] = useState({
+    name,
+    price,
+    quantity: 0,
+  });
 
   const handleIncrement = () => {
-    setQtdProducts(qtdProducts + 1);
+    setProduct({ ...product, quantity: product.quantity + 1 });
     setValorTotal(valorTotal + price * 1);
+    if (product.quantity === 0) {
+      addCar({ ...product, quantity: 1 });
+    } else {
+      addCar(product);
+    }
   };
 
   const handleDecrement = () => {
-    if (qtdProducts === 0) return;
-    setQtdProducts(qtdProducts - 1);
+    if (product.quantity === 0) return;
+    setProduct({ ...product, quantity: product.quantity - 1 });
     setValorTotal(valorTotal - price * 1);
+    removeCar(product);
   };
 
-  const handleChange = (event) => {
-    console.log(event);
-    setQtdProducts(event.target.value);
-    setValorTotal(valorTotal + (price * event.target.value));
+  const handleChange = ({ target: { value } }) => {
+    if (value === 0) return;
+    setProduct({ ...product, quantity: value });
+    setValorTotal(price * value);
+    addCar(product);
   };
-
-  useEffect(() => {
-    localStorage.setItem('valorTotal', JSON.stringify(valorTotal));
-  }, [valorTotal]);
 
   return (
     <div className="ProductCard">
@@ -66,7 +72,7 @@ function Cards({ price, urlImage, name, id }) {
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
         name="quantidade"
-        value={ qtdProducts }
+        value={ product.quantity }
         onChange={ handleChange }
       />
 

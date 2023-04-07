@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import NavBar from '../../components/NavBar';
 import TableElement from './components/tableElement';
 import ProductContext from '../../store/context/ProductContext';
@@ -6,13 +6,14 @@ import THead from './components/thead';
 import Select from './components/select';
 
 function Checkout() {
-  const { sales, setSales } = useContext(ProductContext);
+  const { useCar, setCar } = useContext(ProductContext);
+  const carShop = JSON.parse(localStorage.getItem('carrinho'));
 
   const remove = (number) => {
-    const index = number - 1;
-    sales.splice(index, 1);
-    console.log(sales);
-    setSales(sales);
+    useCar.splice(number, 1);
+    console.log(useCar);
+    setCar(useCar);
+    console.log(carShop);
   };
 
   const header = ['Item', 'Descrição', 'Quantidade',
@@ -26,11 +27,11 @@ function Checkout() {
         <table>
           <THead header={ header } />
           <tbody>
-            { sales.map((element, index) => (
+            { carShop.map((element, index) => (
               <TableElement
                 key={ index }
                 product={ element }
-                number={ index + 1 }
+                number={ index }
                 remove={ remove }
               />
             ))}
@@ -45,20 +46,27 @@ function Checkout() {
             id="saller"
             dataTest="customer_checkout__select-seller"
             options={ ['josé', 'ronaldo', 'pele'] }
+            label="P. Vendedora Responsavel"
           />
           <label
             htmlFor="address"
-            data-testid="customer_checkout__input-address"
           >
             Endereço
-            <input id="address" type="text" />
+            <input
+              data-testid="customer_checkout__input-address"
+              id="address"
+              type="text"
+            />
           </label>
           <label
             htmlFor="address-number"
-            data-testid="customer_checkout__input-address-number"
           >
             Numero
-            <input id="address-number" type="number" />
+            <input
+              data-testid="customer_checkout__input-address-number"
+              id="address-number"
+              type="number"
+            />
           </label>
           <button data-testid="customer_checkout__button-submit-order" type="button">
             Finalizar Pedido

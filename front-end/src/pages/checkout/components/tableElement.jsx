@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TableElement({ product, number, remove }) {
-  const { name, quantity, unitPrice, subTotal } = product;
+  const { name, quantity, price } = product;
+  const subTotal = Number(price) * quantity;
 
   return (
     <tr>
@@ -24,17 +25,17 @@ function TableElement({ product, number, remove }) {
       <td
         data-testid={ `customer_checkout__element-order-table-unit-price-${number}` }
       >
-        { unitPrice }
+        { `${Number(price).toFixed(2).replace('.', ',')}` }
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-sub-total-${number}` }
       >
-        { subTotal }
+        { `${subTotal.toFixed(2).replace('.', ',')}` }
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-remove-${number}` }
       >
-        <button type="button" onClick={ remove }>
+        <button type="button" onClick={ () => remove(number) }>
           Remover
         </button>
       </td>
@@ -46,8 +47,7 @@ TableElement.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
-    unitPrice: PropTypes.number.isRequired,
-    subTotal: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
   }).isRequired,
   number: PropTypes.number.isRequired,
   remove: PropTypes.func.isRequired,

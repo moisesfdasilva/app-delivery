@@ -4,8 +4,8 @@ import ProductContext from '../store/context/ProductContext';
 import '../App.css';
 
 function TotalProduct() {
-  const { valorTotal } = useContext(ProductContext);
   const history = useHistory();
+  const { valorTotal, useCar } = useContext(ProductContext);
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
@@ -14,7 +14,10 @@ function TotalProduct() {
     } else {
       setBtnDisabled(true);
     }
-  }, [valorTotal]);
+
+    localStorage.setItem('valorTotal', JSON.stringify(valorTotal));
+    localStorage.setItem('carrinho', JSON.stringify(useCar));
+  }, [valorTotal, useCar]);
 
   return (
     <div className="ProductCard">
