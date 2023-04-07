@@ -24,7 +24,7 @@ export default function ProductProvider({ children }) {
 
   function removeCar(product) {
     const beer = useCar.find((e) => e.name === product.name);
-    if(beer.quantity === 1) {
+    if (beer.quantity === 1) {
       const remove = useCar.filter((e) => e.name !== product.name);
       return setCar(remove);
     } const update = useCar.reduce((acc, element) => {

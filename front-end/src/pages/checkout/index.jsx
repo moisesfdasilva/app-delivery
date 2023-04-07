@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import NavBar from '../../components/NavBar';
 import TableElement from './components/tableElement';
 import ProductContext from '../../store/context/ProductContext';
