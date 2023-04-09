@@ -10,10 +10,19 @@ const verifyTokenCustomer = (token) => {
   }
 };
 
+const getSaller = async () => {
+  const sellers = await Users.findAll({
+    where: { role: 'seller' },
+    attributes: { exclude: ['password', 'email'] },
+  });
+
+  return sellers;
+};
+
 const postLogin = async (email, password) => {
   const user = await Users.findOne({
     where: { email, password },
-    attributes: { exclude: ['password', 'id'] },
+    attributes: { exclude: ['password'] },
   });
 
   if (!user) return { type: 'USER_NOT_FOUND', message: 'Not found' };
@@ -40,4 +49,5 @@ module.exports = {
   postLogin,
   postRegister,
   verifyTokenCustomer,
+  getSaller,
 };

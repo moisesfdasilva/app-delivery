@@ -5,6 +5,7 @@ const {
   productRouters,
   registerRouters,
   orderRouters,
+  saleRouters,
 } = require('../routers');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use('/user', userRouters);
 app.use('/products', productRouters);
 app.use('/register', registerRouters);
 app.use('/order', orderRouters);
+app.use('/sale', saleRouters);
 
 app.use(express.static('public'));
 

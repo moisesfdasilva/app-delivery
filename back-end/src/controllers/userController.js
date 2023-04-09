@@ -14,6 +14,12 @@ const postUserLogin = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const getSaller = async (_req, res) => {
+  const sellers = await userService.getSaller();
+
+  return res.status(200).json({ sellers });
+};
+
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   const hash = md5(password);
@@ -45,4 +51,5 @@ module.exports = {
   registerUser,
   getUser,
   verifyTokenCustomer,
+  getSaller,
 };
