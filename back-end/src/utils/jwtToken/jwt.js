@@ -1,10 +1,8 @@
 require('dotenv/config');
 const fs = require('fs');
 
-const secretfs = fs.readFileSync('jwt.evaluation.key');
+const secret = fs.readFileSync('jwt.evaluation.key');
 const jwt = require('jsonwebtoken');
-
-const secret = secretfs;
 
 const jwtEncode = (payload) => {
   const jwtConfig = {

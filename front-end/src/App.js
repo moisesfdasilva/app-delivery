@@ -6,6 +6,7 @@ import './App.css';
 import Login from './pages/login';
 import Register from './pages/register';
 import Products from './pages/products';
+import Checkout from './pages/checkout';
 import CustomerOrder from './pages/customerOrder';
 import CustomerOrderDetail from './pages/customerOrderDetails';
 import SellerOrder from './pages/sellerOrder';
@@ -26,7 +27,7 @@ function App() {
         <Route path="/seller/orders/:id" component={ SellerOrderDetails } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
-          <Route path="/customer/checkout" />
+          <Route path="/customer/checkout" component={ Checkout } />
         </ProductProvider>
       </Switch>
     </UserProvider>
