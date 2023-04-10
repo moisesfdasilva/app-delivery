@@ -1,19 +1,36 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../App.css';
 
 function NavBar() {
+  const [user, setUser] = useState({
+    name: '',
+  });
+
   const history = useHistory();
+
+  const getUser = () => {
+    const data = localStorage.getItem('user');
+    const result = JSON.parse(data);
+    setUser({ ...result });
+  };
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    return history.push('/');
+  };
+
+  useEffect(() => getUser(), []);
+
   return (
     <header className="Navbar">
-      <Link
+      <button
         to="/customer/products"
         data-testid="customer_products__element-navbar-link-products"
         type="button"
       >
         Produtos
-      </Link>
+      </button>
 
       <button
         data-testid="customer_products__element-navbar-link-orders"
@@ -24,16 +41,16 @@ function NavBar() {
       </button>
 
       <p data-testid="customer_products__element-navbar-user-full-name">
-        Cliente
+        { user.name }
       </p>
 
-      <Link
+      <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        to="/"
+        onClick={ logout }
       >
         Sair
-      </Link>
+      </button>
 
     </header>
   );

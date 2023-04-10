@@ -4,7 +4,7 @@ const fs = require('fs');
 const secretfs = fs.readFileSync('jwt.evaluation.key');
 const jwt = require('jsonwebtoken');
 
-const secret = process.env.JWT_SECRET || secretfs;
+const secret = secretfs;
 
 const jwtEncode = (payload) => {
   const jwtConfig = {
@@ -16,4 +16,10 @@ const jwtEncode = (payload) => {
   return token;
 };
 
-module.exports = jwtEncode;
+const jwtDecode = (token) => {
+  const decoded = jwt.verify(token, secret);
+  const { role } = decoded;
+  return role;
+};
+
+module.exports = { jwtEncode, jwtDecode };

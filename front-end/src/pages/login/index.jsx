@@ -42,11 +42,13 @@ function Login() {
     }
   };
 
-  const login = () => {
+  const login = async () => {
     const { email, password } = form;
+
     api.post('/user', { email, password })
-      .then(({ data: { user } }) => {
-        setUser({ ...user });
+      .then(({ data: { user, token } }) => {
+        setUser({ ...user, token });
+        localStorage.setItem('user', JSON.stringify({ ...user, token }));
         redirect(user.role);
       }).catch(({ response }) => {
         console.log(response);
