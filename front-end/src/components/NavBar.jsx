@@ -25,7 +25,7 @@ function NavBar() {
   return (
     <header className="Navbar">
       <button
-        to="/customer/products"
+        onClick={ () => history.push('/customer/products') }
         data-testid="customer_products__element-navbar-link-products"
         type="button"
       >
