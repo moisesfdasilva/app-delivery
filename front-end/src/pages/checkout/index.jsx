@@ -51,7 +51,11 @@ function Checkout() {
   };
 
   const handleOnClick = async () => {
-    const newSale = await sendSale({ ...sale, totalPrice: Number(valorTotal) });
+    const newSale = await sendSale({
+      ...sale,
+      totalPrice: Number(valorTotal),
+    }, carShop, user.token);
+    console.log(carShop);
     history.push(`/customer/orders/${newSale.id}`);
     console.log(newSale);
   };

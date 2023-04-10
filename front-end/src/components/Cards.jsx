@@ -5,6 +5,7 @@ import ProductContext from '../store/context/ProductContext';
 function Cards({ price, urlImage, name, id }) {
   const { valorTotal, setValorTotal, addCar, removeCar } = useContext(ProductContext);
   const [product, setProduct] = useState({
+    id,
     name,
     price,
     quantity: 0,
