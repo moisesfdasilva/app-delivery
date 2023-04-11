@@ -58,6 +58,22 @@ function Login() {
 
   useEffect(() => handleValidation(), [form.email, form.password]);
 
+  const checkToken = async () => {
+    const data = localStorage.getItem('user');
+    const result = JSON.parse(data);
+
+    if (result === null) return;
+    const { token, role } = result;
+    try {
+      await api.get('/user/verify', { headers: { Authorization: token } });
+      redirect(role);
+    } catch (err) {
+      return history.push('/');
+    }
+  };
+
+  useEffect(() => checkToken(), []);
+
   return (
     <div>
       <form>

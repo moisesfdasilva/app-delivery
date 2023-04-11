@@ -5,21 +5,21 @@ import TableOrdDetHeader from '../../components/tableOrdDetHeader';
 import api from '../../services/api';
 
 function CustomerOrderDetails() {
+  const history = useHistory();
   const [order, setOrder] = useState({
     loading: true,
   });
 
   useEffect(() => {
     async function getOrder() {
-      // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
-      const { data } = await api.get('/order/details/1');
+      const id = (history.location.pathname).replace('/customer/orders/', '');
+      const { data } = await api.get(`/order/details/${id}`);
       const newOrder = data.order;
       setOrder(newOrder);
     }
     getOrder();
   }, []);
 
-  const history = useHistory();
   const seller = (history.location.pathname).includes('seller');
 
   if (order.loading) { return <h1>LOADING...</h1>; }
@@ -66,7 +66,8 @@ function CustomerOrderDetails() {
       </table>
       <section>
         <h1 data-testid="customer_order_details__element-order-total-price">
-          { order.totalPrice }
+          { Number(order.totalPrice)
+            .toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
         </h1>
       </section>
     </>

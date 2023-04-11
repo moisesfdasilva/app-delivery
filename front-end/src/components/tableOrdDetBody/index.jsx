@@ -17,10 +17,10 @@ function TableOrdDetBody({ id, name, quantity, price, seller }) {
         { quantity }
       </td>
       <td data-testid={ `${testId}unit-price-${id}` }>
-        { price }
+        { Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
       </td>
       <td data-testid={ `${testId}sub-total-${id}` }>
-        { totalCost }
+        { totalCost.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
       </td>
     </tr>
   );

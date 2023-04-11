@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
   const route = seller ? 'seller' : 'customer';
   const testId = `${route}_order_details__element-order-details-label-`;
-  const TEN = 10;
+  const testIdButton = testId.replace('element-order-details-label-', 'button');
+  const newSaleDate = new Date(saleDate);
+
   return (
     <thead>
       <tr>
@@ -17,7 +19,7 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
           </th>
         ) }
         <th data-testid={ `${testId}order-date` }>
-          { saleDate.slice(0, TEN) }
+          { newSaleDate.toLocaleDateString('en-GB') }
         </th>
         <th
           data-testid={ `${testId}delivery-status-${id}` }
@@ -30,8 +32,14 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
           </th>
         ) }
         { !seller && (
-          <th data-testid="button-delivery-check">
-            MARCAR COMO ENTREGUE
+          <th>
+            <button
+              data-testid={ `${testIdButton}-delivery-check` }
+              type="button"
+              disabled
+            >
+              MARCAR COMO ENTREGUE
+            </button>
           </th>
         ) }
         { seller && (
