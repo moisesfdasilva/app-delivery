@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import OrderCard from '../../components/orderCard';
 import api from '../../services/api';
-import UserContext from '../../store/context/UserContext';
+import NavBar from '../../components/NavBar';
 
 function SellerOrder() {
   const [orders, setOrders] = useState([]);
-  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function getAllOrders() {
@@ -25,17 +24,7 @@ function SellerOrder() {
 
   return (
     <main>
-      <nav>
-        <div data-testid="customer_products__element-navbar-link-orders">
-          PEDIDOS
-        </div>
-        <div data-testid="customer_products__element-navbar-user-full-name">
-          { user.name }
-        </div>
-        <div data-testid="customer_products__element-navbar-link-logout">
-          Sair
-        </div>
-      </nav>
+      <NavBar />
       <section>
         { orders.map((ord) => (
           <OrderCard

@@ -21,7 +21,9 @@ function OrderCard({ id, status, saleDate, totalPrice, address, seller }) {
         <p>{ saleDataStandard.toLocaleDateString('en-GB') }</p>
       </div>
       <div data-testid={ `${route}_orders__element-card-price-${id}` }>
-        <p>{ totalPrice }</p>
+        <p>
+          { Number(totalPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
+        </p>
       </div>
       { seller && (
         <div data-testid={ `seller_orders__element-card-address-${id}` }>

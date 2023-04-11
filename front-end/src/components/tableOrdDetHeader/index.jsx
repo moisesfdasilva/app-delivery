@@ -26,8 +26,13 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
           { status }
         </th>
         { seller && (
-          <th data-testid="seller_order_details__button-preparing-check">
-            PREPARAR PEDIDO
+          <th>
+            <button
+              data-testid={ `${testIdButton}-preparing-check` }
+              type="button"
+            >
+              PREPARAR PEDIDO
+            </button>
           </th>
         ) }
         { !seller && (
@@ -42,8 +47,14 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
           </th>
         ) }
         { seller && (
-          <th data-testid="seller_order_details__button-dispatch-check">
-            SAIU PARA ENTREGA
+          <th>
+            <button
+              data-testid={ `${testIdButton}-dispatch-check` }
+              type="button"
+              disabled
+            >
+              SAIU PARA ENTREGA
+            </button>
           </th>
         ) }
       </tr>
