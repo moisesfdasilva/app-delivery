@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import TableOrdDetBody from '../../components/tableOrdDetBody';
 import TableOrdDetHeader from '../../components/tableOrdDetHeader';
 import api from '../../services/api';
+import NavBar from '../../components/NavBar';
 
 function CustomerOrderDetails() {
   const history = useHistory();
@@ -14,8 +15,8 @@ function CustomerOrderDetails() {
     async function getOrder() {
       const id = (history.location.pathname).replace('/customer/orders/', '');
       const { data } = await api.get(`/order/details/${id}`);
-      const newOrder = data.order;
-      setOrder(newOrder);
+      const orderData = data.order;
+      setOrder(orderData);
     }
     getOrder();
   }, []);
@@ -25,20 +26,7 @@ function CustomerOrderDetails() {
   if (order.loading) { return <h1>LOADING...</h1>; }
   return (
     <>
-      <nav>
-        <div data-testid="customer_products__element-navbar-link-products">
-          PRODUTOS
-        </div>
-        <div data-testid="customer_products__element-navbar-link-orders">
-          MEUS PEDIDOS
-        </div>
-        <div data-testid="customer_products__element-navbar-user-full-name">
-          { order.user.name }
-        </div>
-        <div data-testid="customer_products__element-navbar-link-logout">
-          Sair
-        </div>
-      </nav>
+      <NavBar />
       <section>
         <h1>Detalhe do Pedido</h1>
       </section>

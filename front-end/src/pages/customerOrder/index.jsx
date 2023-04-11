@@ -1,22 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import OrderCard from '../../components/orderCard';
 import api from '../../services/api';
-import UserContext from '../../store/context/UserContext';
+import NavBar from '../../components/NavBar';
 
 function CustomerOrder() {
   const [orders, setOrders] = useState([]);
-  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function getAllOrders() {
       const userLocalStorage = localStorage.getItem('user');
       const userData = JSON.parse(userLocalStorage);
       const { id } = userData;
-
-      const { data } = await api.get(`/order/${id}`);
-      const newOrders = Object.values(data.orders);
-      setOrders(newOrders);
+      const { data } = await api.get(`/order/customer/${id}`);
+      const ordersData = Object.values(data.orders);
+      setOrders(ordersData);
     }
     getAllOrders();
   }, []);
@@ -26,20 +24,7 @@ function CustomerOrder() {
 
   return (
     <main>
-      <nav>
-        <div data-testid="customer_products__element-navbar-link-products">
-          PRODUTOS
-        </div>
-        <div data-testid="customer_products__element-navbar-link-orders">
-          MEUS PEDIDOS
-        </div>
-        <div data-testid="customer_products__element-navbar-user-full-name">
-          { user.name }
-        </div>
-        <div data-testid="customer_products__element-navbar-link-logout">
-          Sair
-        </div>
-      </nav>
+      <NavBar />
       <section>
         { orders.map((ord) => (
           <OrderCard

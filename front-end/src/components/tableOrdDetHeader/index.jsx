@@ -5,8 +5,7 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
   const route = seller ? 'seller' : 'customer';
   const testId = `${route}_order_details__element-order-details-label-`;
   const testIdButton = testId.replace('element-order-details-label-', 'button');
-  const newSaleDate = new Date(saleDate);
-
+  const saleDataStandard = new Date(saleDate);
   return (
     <thead>
       <tr>
@@ -19,7 +18,7 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
           </th>
         ) }
         <th data-testid={ `${testId}order-date` }>
-          { newSaleDate.toLocaleDateString('en-GB') }
+          { saleDataStandard.toLocaleDateString('en-GB') }
         </th>
         <th
           data-testid={ `${testId}delivery-status-${id}` }

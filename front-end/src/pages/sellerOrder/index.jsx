@@ -10,10 +10,12 @@ function SellerOrder() {
 
   useEffect(() => {
     async function getAllOrders() {
-      // QUANDO CHEGAR NESSE REQUISITO AJUSTAR A ROTA COM O ID DINÂMICO
-      const { data } = await api.get('/order/seller/2');
-      const newOrders = Object.values(data.orders);
-      setOrders(newOrders);
+      const userLocalStorage = localStorage.getItem('user');
+      const userData = JSON.parse(userLocalStorage);
+      const { id } = userData;
+      const { data } = await api.get(`/order/seller/${id}`);
+      const ordersData = Object.values(data.orders);
+      setOrders(ordersData);
     }
     getAllOrders();
   }, []);

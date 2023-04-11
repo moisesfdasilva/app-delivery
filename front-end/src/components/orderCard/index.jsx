@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function OrderCard({ id, status, saleDate, totalPrice, address, seller }) {
   const route = seller ? 'seller' : 'customer';
+  const saleDataStandard = new Date(saleDate);
   return (
     <Link
       to={ `/${route}/orders/${id}` }
@@ -17,7 +18,7 @@ function OrderCard({ id, status, saleDate, totalPrice, address, seller }) {
         <p>{ status }</p>
       </div>
       <div data-testid={ `${route}_orders__element-order-date-${id}` }>
-        <p>{ saleDate }</p>
+        <p>{ saleDataStandard.toLocaleDateString('en-GB') }</p>
       </div>
       <div data-testid={ `${route}_orders__element-card-price-${id}` }>
         <p>{ totalPrice }</p>
