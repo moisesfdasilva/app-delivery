@@ -1,29 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TableOrdDetHeader({ id, seller, saleDate, status }) {
-  const testId = 'customer_order_details__element-order-details-label-';
-  const TEN = 10;
+function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
+  const route = seller ? 'seller' : 'customer';
+  const testId = `${route}_order_details__element-order-details-label-`;
+  const testIdButton = testId.replace('element-order-details-label-', 'button');
+  const saleDataStandard = new Date(saleDate);
   return (
     <thead>
       <tr>
         <th data-testid={ `${testId}order-id` }>
           { `PEDIDO ${id}` }
         </th>
-        <th data-testid={ `${testId}seller-name` }>
-          { `P. Vend: ${seller}` }
-        </th>
+        { !seller && (
+          <th data-testid={ `${testId}seller-name` }>
+            { `P. Vend: ${sellerName}` }
+          </th>
+        ) }
         <th data-testid={ `${testId}order-date` }>
-          { saleDate.slice(0, TEN) }
+          { saleDataStandard.toLocaleDateString('en-GB') }
         </th>
         <th
           data-testid={ `${testId}delivery-status-${id}` }
         >
           { status }
         </th>
-        <th data-testid="button-delivery-check">
-          MARCAR COMO ENTREGUE
-        </th>
+        { seller && (
+          <th>
+            <button
+              data-testid={ `${testIdButton}-preparing-check` }
+              type="button"
+            >
+              PREPARAR PEDIDO
+            </button>
+          </th>
+        ) }
+        { !seller && (
+          <th>
+            <button
+              data-testid={ `${testIdButton}-delivery-check` }
+              type="button"
+              disabled
+            >
+              MARCAR COMO ENTREGUE
+            </button>
+          </th>
+        ) }
+        { seller && (
+          <th>
+            <button
+              data-testid={ `${testIdButton}-dispatch-check` }
+              type="button"
+              disabled
+            >
+              SAIU PARA ENTREGA
+            </button>
+          </th>
+        ) }
       </tr>
       <tr>
         <th>Item</th>
@@ -38,9 +71,10 @@ function TableOrdDetHeader({ id, seller, saleDate, status }) {
 
 TableOrdDetHeader.propTypes = {
   id: PropTypes.number,
-  seller: PropTypes.string,
+  sellerName: PropTypes.string,
   saleDate: PropTypes.string,
   status: PropTypes.string,
+  seller: PropTypes.bool,
 }.isRequired;
 
 export default TableOrdDetHeader;

@@ -35,6 +35,8 @@ function Login() {
     switch (role) {
     case 'customer':
       return history.push('/customer/products');
+    case 'seller':
+      return history.push('/seller/orders');
     default:
       return history.push('/');
     }
@@ -55,6 +57,22 @@ function Login() {
   };
 
   useEffect(() => handleValidation(), [form.email, form.password]);
+
+  const checkToken = async () => {
+    const data = localStorage.getItem('user');
+    const result = JSON.parse(data);
+
+    if (result === null) return;
+    const { token, role } = result;
+    try {
+      await api.get('/user/verify', { headers: { Authorization: token } });
+      redirect(role);
+    } catch (err) {
+      return history.push('/');
+    }
+  };
+
+  useEffect(() => checkToken(), []);
 
   return (
     <div>

@@ -20,25 +20,41 @@ function NavBar() {
     return history.push('/');
   };
 
+  const seller = (history.location.pathname).includes('seller');
+
   useEffect(() => getUser(), []);
 
   return (
     <header className="Navbar">
-      <button
-        onClick={ () => history.push('/customer/products') }
-        data-testid="customer_products__element-navbar-link-products"
-        type="button"
-      >
-        Produtos
-      </button>
+      { !seller && (
+        <button
+          onClick={ () => history.push('/customer/products') }
+          data-testid="customer_products__element-navbar-link-products"
+          type="button"
+        >
+          Produtos
+        </button>
+      ) }
 
-      <button
-        data-testid="customer_products__element-navbar-link-orders"
-        type="button"
-        onClick={ () => history.push('/customer/orders') }
-      >
-        Meus Pedidos
-      </button>
+      { !seller && (
+        <button
+          data-testid="customer_products__element-navbar-link-orders"
+          type="button"
+          onClick={ () => history.push('/customer/orders') }
+        >
+          Meus Pedidos
+        </button>
+      ) }
+
+      { seller && (
+        <button
+          data-testid="customer_products__element-navbar-link-orders"
+          type="button"
+          onClick={ () => history.push('/seller/orders') }
+        >
+          PEDIDOS
+        </button>
+      ) }
 
       <p data-testid="customer_products__element-navbar-user-full-name">
         { user.name }

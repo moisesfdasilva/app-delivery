@@ -4,7 +4,7 @@ import OrderCard from '../../components/orderCard';
 import api from '../../services/api';
 import NavBar from '../../components/NavBar';
 
-function CustomerOrder() {
+function SellerOrder() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function CustomerOrder() {
       const userLocalStorage = localStorage.getItem('user');
       const userData = JSON.parse(userLocalStorage);
       const { id } = userData;
-      const { data } = await api.get(`/order/customer/${id}`);
+      const { data } = await api.get(`/order/seller/${id}`);
       const ordersData = Object.values(data.orders);
       setOrders(ordersData);
     }
@@ -42,4 +42,4 @@ function CustomerOrder() {
   );
 }
 
-export default CustomerOrder;
+export default SellerOrder;

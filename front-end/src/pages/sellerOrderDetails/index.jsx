@@ -5,7 +5,7 @@ import TableOrdDetHeader from '../../components/tableOrdDetHeader';
 import api from '../../services/api';
 import NavBar from '../../components/NavBar';
 
-function CustomerOrderDetails() {
+function SellerOrderDetails() {
   const history = useHistory();
   const [order, setOrder] = useState({
     loading: true,
@@ -13,7 +13,7 @@ function CustomerOrderDetails() {
 
   useEffect(() => {
     async function getOrder() {
-      const id = (history.location.pathname).replace('/customer/orders/', '');
+      const id = (history.location.pathname).replace('/seller/orders/', '');
       const { data } = await api.get(`/order/details/${id}`);
       const orderData = data.order;
       setOrder(orderData);
@@ -53,7 +53,7 @@ function CustomerOrderDetails() {
         </tbody>
       </table>
       <section>
-        <h1 data-testid="customer_order_details__element-order-total-price">
+        <h1 data-testid="seller_order_details__element-order-total-price">
           { Number(order.totalPrice)
             .toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
         </h1>
@@ -62,4 +62,4 @@ function CustomerOrderDetails() {
   );
 }
 
-export default CustomerOrderDetails;
+export default SellerOrderDetails;

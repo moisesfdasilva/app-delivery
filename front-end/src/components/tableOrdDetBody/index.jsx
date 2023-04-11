@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TableOrdDetBody({ id, name, quantity, price }) {
+function TableOrdDetBody({ id, name, quantity, price, seller }) {
+  const route = seller ? 'seller' : 'customer';
+  const testId = `${route}_order_details__element-order-table-`;
   const totalCost = quantity * Number(price);
   return (
     <tr>
-      <td data-testid={ `customer_order_details__element-order-table-item-number-${id}` }>
+      <td data-testid={ `${testId}item-number-${id}` }>
         { id }
       </td>
-      <td data-testid={ `customer_order_details__element-order-table-name-${id}` }>
+      <td data-testid={ `${testId}name-${id}` }>
         { name }
       </td>
-      <td data-testid={ `customer_order_details__element-order-table-quantity-${id}` }>
+      <td data-testid={ `${testId}quantity-${id}` }>
         { quantity }
       </td>
-      <td data-testid={ `customer_order_details__element-order-table-unit-price-${id}` }>
-        { price }
+      <td data-testid={ `${testId}unit-price-${id}` }>
+        { Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
       </td>
-      <td data-testid={ `customer_order_details__element-order-table-sub-total-${id}` }>
-        { totalCost }
+      <td data-testid={ `${testId}sub-total-${id}` }>
+        { totalCost.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
       </td>
     </tr>
   );
@@ -29,6 +31,7 @@ TableOrdDetBody.propTypes = {
   name: PropTypes.string,
   quantity: PropTypes.number,
   price: PropTypes.string,
+  seller: PropTypes.bool,
 }.isRequired;
 
 export default TableOrdDetBody;
