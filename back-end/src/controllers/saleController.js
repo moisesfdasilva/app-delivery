@@ -7,6 +7,12 @@ const postSale = async (req, res) => {
   res.status(201).json({ sale });
 };
 
+const updateSaleStatus = async (req, _res) => {
+  const { body } = req;
+  await saleService.updateSaleStatus(body);
+};
+
 module.exports = {
   postSale,
+  updateSaleStatus,
 };

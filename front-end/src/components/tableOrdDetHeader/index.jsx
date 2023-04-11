@@ -1,11 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import api from '../../services/api';
 
 function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
   const route = seller ? 'seller' : 'customer';
   const testId = `${route}_order_details__element-order-details-label-`;
   const testIdButton = testId.replace('element-order-details-label-', 'button');
   const saleDataStandard = new Date(saleDate);
+
+  const [order, setOrder] = useState({
+    status: '',
+  });
+
+  useEffect(() => setOrder({ status }), []);
+
+  function updateOrder(statusOrder) {
+    api.put('/sale/status', { id, status: statusOrder });
+    setOrder({ status: statusOrder });
+  }
+
+  function setStatusOrder({ target }) {
+    const { name } = target;
+    switch (name) {
+    case 'preparing-check':
+      updateOrder('Preparando');
+      break;
+    case 'dispatch-check':
+      updateOrder('Em Trânsito');
+      break;
+    case 'delivery-check':
+      updateOrder('Entregue');
+      break;
+    default:
+      console.log('PARAMETRO NÂO ENCONTRADO!');
+    }
+  }
+
   return (
     <thead>
       <tr>
@@ -23,13 +53,16 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
         <th
           data-testid={ `${testId}delivery-status-${id}` }
         >
-          { status }
+          { order.status }
         </th>
         { seller && (
           <th>
             <button
+              name="preparing-check"
               data-testid={ `${testIdButton}-preparing-check` }
               type="button"
+              onClick={ setStatusOrder }
+              disabled={ order.status !== 'Pendente' }
             >
               PREPARAR PEDIDO
             </button>
@@ -38,9 +71,11 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
         { !seller && (
           <th>
             <button
+              name="delivery-check"
               data-testid={ `${testIdButton}-delivery-check` }
               type="button"
-              disabled
+              onClick={ setStatusOrder }
+              disabled={ order.status !== 'Em Trânsito' }
             >
               MARCAR COMO ENTREGUE
             </button>
@@ -49,9 +84,11 @@ function TableOrdDetHeader({ id, sellerName, saleDate, status, seller }) {
         { seller && (
           <th>
             <button
+              name="dispatch-check"
               data-testid={ `${testIdButton}-dispatch-check` }
               type="button"
-              disabled
+              onClick={ setStatusOrder }
+              disabled={ order.status !== 'Preparando' }
             >
               SAIU PARA ENTREGA
             </button>

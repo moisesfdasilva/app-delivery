@@ -26,7 +26,6 @@ const postLogin = async (email, password) => {
   });
 
   if (!user) return { type: 'USER_NOT_FOUND', message: 'Not found' };
-console.log('usuario', user);
   const token = jwtEncode(user.dataValues);
 
   return { user, token };

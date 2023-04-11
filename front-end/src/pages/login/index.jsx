@@ -68,6 +68,7 @@ function Login() {
       await api.get('/user/verify', { headers: { Authorization: token } });
       redirect(role);
     } catch (err) {
+      localStorage.removeItem('user');
       return history.push('/');
     }
   };
