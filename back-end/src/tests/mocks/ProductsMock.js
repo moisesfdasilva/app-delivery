@@ -1,4 +1,4 @@
-const outputSellers = [
+const outputProductsMock = [
   {
     id: 1,
     name: 'Corote Transparente 500ml',
@@ -20,5 +20,5 @@ const outputSellers = [
 ];
 
 module.exports = {
-  outputSellers,
+  outputProductsMock,
 };

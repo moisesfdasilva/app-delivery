@@ -6,7 +6,7 @@ const inputNewUserMock = {
 
 const outputNewUserMock = {
   dataValues: {
-    id: 4,
+    id: 44,
     name: 'Coelho Ricochete',
     email: 'coelho@ricochete.com',
     role: 'customer',

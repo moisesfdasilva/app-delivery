@@ -14,7 +14,7 @@ describe('3. Teste da rota /register:', () => {
     sinon.restore();
   });
 
-  it(`3.1. Get em "/", com nome, email e senha válidos, deve retornar status 200, os dados do
+  it(`3.1. Post em "/", com nome, email e senha válidos, deve retornar status 200, os dados do
   usuário(email, id, name e role) e um token.`, async function () {
     sinon.stub(Model, 'findOne')
       .onFirstCall().resolves(null)
@@ -28,8 +28,8 @@ describe('3. Teste da rota /register:', () => {
     expect(response.body).to.have.property('token');
   });
 
-  it(`3.2. Get em "/", com email e senha já existentes, deve retornar status 409 e uma messagem
-  "Conflict".`, async function () {
+  it(`3.2. Post em "/", com email e senha já cadastrados no banco de dados, deve retornar status
+  409 e uma messagem "Conflict".`, async function () {
     sinon.stub(Model, 'findOne').resolves(outputNewUserMock);
 
     const response = await chai.request(app).post('/register').send(inputNewUserMock);
