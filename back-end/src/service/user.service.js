@@ -11,6 +11,10 @@ const verifyTokenCustomer = (token) => {
   }
 };
 
+const deleteUser = async (id) => {
+  await Users.destroy({ where: { id } });
+};
+
 const getUsersComun = async () => {
   const users = await Users.findAll({
     where: {
@@ -64,4 +68,5 @@ module.exports = {
   verifyTokenCustomer,
   getSaller,
   getUsersComun,
+  deleteUser,
 };

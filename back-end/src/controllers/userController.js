@@ -14,6 +14,18 @@ const postUserLogin = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await userService.deleteUser(id);
+
+    return res.status(200).end();
+  } catch (error) {
+    return res.status(400).json({ message: 'not found' });
+  }
+};
+
 const getUsersComun = async (_req, res) => {
   const users = await userService.getUsersComun();
 
@@ -52,4 +64,5 @@ module.exports = {
   verifyTokenCustomer,
   getSaller,
   getUsersComun,
+  deleteUser,
 };

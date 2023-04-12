@@ -5,6 +5,7 @@ import THead from '../checkout/components/thead';
 import { getUsersComun } from '../../services/user.service';
 import TableElement from './components/TableElement';
 import api from '../../services/api';
+import deleteUsers from '../../services/adm.services';
 
 function Admin() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -33,7 +34,8 @@ function Admin() {
     get();
   }, [handleRegister]);
 
-  const remove = () => {
+  const remove = async (id) => {
+    await deleteUsers(id, user.token);
   };
 
   return (

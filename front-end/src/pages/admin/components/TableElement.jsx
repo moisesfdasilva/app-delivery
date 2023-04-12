@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TableElement({ product, number }) {
-  const { name, email, role, remove } = product;
+  const { name, email, role, id, remove } = product;
 
   return (
     <tr>
@@ -29,7 +29,7 @@ function TableElement({ product, number }) {
       <td
         data-testid={ `admin_manage__element-user-table-remove-${number}` }
       >
-        <button type="button" onClick={ () => remove() }>
+        <button type="button" onClick={ () => remove(id) }>
           Remover
         </button>
       </td>
@@ -41,6 +41,7 @@ TableElement.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     role: PropTypes.string.isRequired,
     remove: PropTypes.func.isRequired,
   }).isRequired,
