@@ -17,8 +17,25 @@ const inputInvalidCustomerMock = {
   password: '!vigarista!!',
 };
 
+const authValidTokenMock = {
+  authorization: 'TOKEN-VÁLIDO',
+};
+
+const authInvalidTokenMock = {
+  authorization: 'TOKEN-INVÁLIDO',
+};
+
+const outputSellers = [
+  { id: 7, name: 'Mosquete', role: "seller" },
+  { id: 8, name: 'Mosquito', role: "seller" },
+  { id: 15, name: 'Moscardo', role: "seller" },
+];
+
 module.exports = {
   inputValidCustomerMock,
   outputValidCustomerMock,
   inputInvalidCustomerMock,
-}
+  authValidTokenMock,
+  authInvalidTokenMock,
+  outputSellers,
+};
