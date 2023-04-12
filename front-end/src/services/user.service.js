@@ -9,4 +9,13 @@ const getAllSellers = async () => {
   }
 };
 
+export const getUsersComun = async () => {
+  try {
+    const { data: { users } } = await api.get('/user/data');
+    return users;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export default getAllSellers;

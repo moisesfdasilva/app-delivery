@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Select from '../../../components/Select';
-import api from '../../../services/api';
 
-function Forms() {
-  const user = JSON.parse(localStorage.getItem('user'));
-
+function Forms({ handleRegister }) {
   const [useDisabled, setDisabled] = useState(true);
   const [useNotRgister, setNotRegister] = useState(false);
   const [useForm, setForm] = useState({
@@ -51,19 +49,6 @@ function Forms() {
       setDisabled(false);
     } else {
       setDisabled(true);
-    }
-  };
-
-  const handleRegister = async () => {
-    try {
-      await api.post('/register', { ...useForm }, {
-        headers: {
-          Authorization: user.token,
-        },
-      });
-      setNotRegister(false);
-    } catch (error) {
-      setNotRegister(true);
     }
   };
 
@@ -116,7 +101,7 @@ function Forms() {
         <button
           data-testid="admin_manage__button-register"
           disabled={ useDisabled }
-          onClick={ handleRegister }
+          onClick={ () => handleRegister(useForm, setNotRegister) }
           type="button"
         >
           Cadastrar
@@ -130,5 +115,9 @@ function Forms() {
     </div>
   );
 }
+
+Forms.propTypes = {
+  handleRegister: PropTypes.func.isRequired,
+};
 
 export default Forms;

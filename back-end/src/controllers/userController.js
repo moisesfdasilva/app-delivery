@@ -14,6 +14,12 @@ const postUserLogin = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const getUsersComun = async (_req, res) => {
+  const users = await userService.getUsersComun();
+
+  return res.status(200).json({ users });
+};
+
 const getSaller = async (_req, res) => {
   const sellers = await userService.getSaller();
 
@@ -34,12 +40,6 @@ const registerUser = async (req, res) => {
   return res.status(201).json(user);
 };
 
-const getUser = async (req, res) => {
-  const { email } = req.body;
-  const data = await userService.postLogin(email);
-  res.status(200).json(data);
-};
-
 const verifyTokenCustomer = (req, res) => {
   const { authorization } = req.headers;
   const result = userService.verifyTokenCustomer(authorization);
@@ -49,7 +49,7 @@ const verifyTokenCustomer = (req, res) => {
 module.exports = {
   postUserLogin,
   registerUser,
-  getUser,
   verifyTokenCustomer,
   getSaller,
+  getUsersComun,
 };
