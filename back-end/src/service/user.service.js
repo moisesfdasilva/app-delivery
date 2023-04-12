@@ -32,7 +32,7 @@ console.log('usuario', user);
   return { user, token };
 };
 
-const postRegister = async (name, email, password) => {
+const postRegister = async (name, email, password, role) => {
   const user = await Users.findOne({
     where: { email, password },
     attributes: { exclude: ['password', 'id'] },
@@ -41,7 +41,7 @@ const postRegister = async (name, email, password) => {
   if (user) {
     return { type: 409, message: 'Conflict' };
   }
-  await Users.create({ name, email, password, role: 'customer' });
+  await Users.create({ name, email, password, role });
   return { type: null, message: 'Created' };
 };
 

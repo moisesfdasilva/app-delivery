@@ -21,9 +21,9 @@ const getSaller = async (_req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   const hash = md5(password);
-  const newUser = await userService.postRegister(name, email, hash);
+  const newUser = await userService.postRegister(name, email, hash, role);
 
   if (newUser.type) {
     return res.status(newUser.type).json({ message: newUser.message });
