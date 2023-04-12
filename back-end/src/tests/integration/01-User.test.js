@@ -17,7 +17,7 @@ const {
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('1. Teste da rota /user', () => {
+describe('1. Teste da rota /user:', () => {
   afterEach(() => {
     sinon.restore();
   });
@@ -33,7 +33,7 @@ describe('1. Teste da rota /user', () => {
     expect(response.body).to.have.property('token');
   });
 
-  it(`1.2. Post em "/", com email inválido, deve retornar status 404 e uma message "Not
+  it(`1.2. Post em "/", com email inválido, deve retornar status 404 e uma messagem "Not
   found".`, async function () {
     sinon.stub(Model, 'findOne').resolves();
 
