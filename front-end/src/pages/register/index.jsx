@@ -36,10 +36,8 @@ function Register() {
   useEffect(() => handleValidation(), [form.name, form.email, form.password]);
 
   const handleRegister = async () => {
-    const { name, email, password } = form;
-
     try {
-      const { data } = await api.post('/register', { name, email, password });
+      const { data } = await api.post('/register', { ...form, role: 'customer' });
       if (data.token) {
         const { user, token } = data;
         localStorage.setItem('user', JSON.stringify({ ...user, token }));

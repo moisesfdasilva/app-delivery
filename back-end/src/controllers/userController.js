@@ -14,6 +14,24 @@ const postUserLogin = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await userService.deleteUser(id);
+
+    return res.status(200).end();
+  } catch (error) {
+    return res.status(400).json({ message: 'not found' });
+  }
+};
+
+const getUsersComun = async (_req, res) => {
+  const users = await userService.getUsersComun();
+
+  return res.status(200).json({ users });
+};
+
 const getSaller = async (_req, res) => {
   const sellers = await userService.getSaller();
 
@@ -21,9 +39,9 @@ const getSaller = async (_req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   const hash = md5(password);
-  const newUser = await userService.postRegister(name, email, hash);
+  const newUser = await userService.postRegister(name, email, hash, role);
 
   if (newUser.type) {
     return res.status(newUser.type).json({ message: newUser.message });
@@ -32,12 +50,6 @@ const registerUser = async (req, res) => {
   const user = await userService.postLogin(email, hash);
 
   return res.status(201).json(user);
-};
-
-const getUser = async (req, res) => {
-  const { email } = req.body;
-  const data = await userService.postLogin(email);
-  res.status(200).json(data);
 };
 
 const verifyTokenCustomer = (req, res) => {
@@ -49,7 +61,8 @@ const verifyTokenCustomer = (req, res) => {
 module.exports = {
   postUserLogin,
   registerUser,
-  getUser,
   verifyTokenCustomer,
   getSaller,
+  getUsersComun,
+  deleteUser,
 };
