@@ -6,23 +6,25 @@ import App from '../../App';
 import UserProvider from '../../store/provider/UserProvider';
 
 describe('1. Testes da tela de Login:', () => {
-  it(`1.1. Verificação do redirecionamento para a tela de produtos ao logar como cliente(customer),
-  com email e senha válidas.`, async () => {
-    const { history } = renderWithRouter(
-      <UserProvider>
-        <App />
-      </UserProvider>
-    );
+  const inputEmailTestId = 'common_login__input-email';
+  const inputPasswordTestId = 'common_login__input-password';
+  const loginButtonTestId = 'common_login__button-login';
+  const invalidTextTestId = 'common_login__element-invalid-email';
 
-    const inputEmail = screen.getByTestId('common_login__input-email');
-    const inputPassword = screen.getByTestId('common_login__input-password');
-    const loginButton = screen.getByTestId('common_login__button-login');
+  it(`1.1. Verificação do redirecionamento para a tela de produtos ao logar como cliente
+  (customer), com email e senha válidas.`, async () => {
+    const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
+
+    const inputEmail = screen.getByTestId(inputEmailTestId);
+    const inputPassword = screen.getByTestId(inputPasswordTestId);
+    const loginButton = screen.getByTestId(loginButtonTestId);
 
     userEvent.type(inputEmail, 'zebirita@email.com');
     userEvent.type(inputPassword, '$#zebirita#$');
     userEvent.click(loginButton);
 
-    await waitFor(() => screen.getByTestId('customer_products__element-navbar-link-logout'));
+    await waitFor(() => screen
+      .getByTestId('customer_products__element-navbar-link-logout'));
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/customer/products');
@@ -30,50 +32,41 @@ describe('1. Testes da tela de Login:', () => {
 
   it(`1.2. Verificação do redirecionamento para a tela de ordens de pedidos ao logar como
   vendedor(seller), com email e senha válidas.`, async () => {
-    const { history } = renderWithRouter(
-      <UserProvider>
-        <App />
-      </UserProvider>
-    );
+    const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
 
-    const inputEmail = screen.getByTestId('common_login__input-email');
-    const inputPassword = screen.getByTestId('common_login__input-password');
-    const loginButton = screen.getByTestId('common_login__button-login');
+    const inputEmail = screen.getByTestId(inputEmailTestId);
+    const inputPassword = screen.getByTestId(inputPasswordTestId);
+    const loginButton = screen.getByTestId(loginButtonTestId);
 
     userEvent.type(inputEmail, 'fulana@deliveryapp.com');
     userEvent.type(inputPassword, 'fulana@123');
     userEvent.click(loginButton);
 
-    await waitFor(() => screen.getByTestId('customer_products__element-navbar-link-logout'));
+    await waitFor(() => screen
+      .getByTestId('customer_products__element-navbar-link-logout'));
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/seller/orders');
   });
 
-  it(`1.3. Verificação da apresentação da mensagem "Usuario não cadastrado" ao logar com email e 
-  senha inválidas.`, async () => {
+  it(`1.3. Verificação da apresentação da mensagem "Usuario não cadastrado" ao logar com
+  email e senha inválidas.`, async () => {
     renderWithRouter(<App />);
 
-    const inputEmail = screen.getByTestId('common_login__input-email');
-    const inputPassword = screen.getByTestId('common_login__input-password');
-    const loginButton = screen.getByTestId('common_login__button-login');
+    const inputEmail = screen.getByTestId(inputEmailTestId);
+    const inputPassword = screen.getByTestId(inputPasswordTestId);
+    const loginButton = screen.getByTestId(loginButtonTestId);
 
     userEvent.type(inputEmail, 'dick@vigarista.com');
     userEvent.type(inputPassword, '$#vigarista#$');
     userEvent.click(loginButton);
 
-    await waitFor(() => 
-      expect(screen.getByTestId('common_login__element-invalid-email')).toBeDefined()
-    );
+    await waitFor(() => expect(screen.getByTestId(invalidTextTestId)).toBeDefined());
   });
 
-  it(`1.4. Verificação do redirecionamento para a tela de registro ao clicar no "botão Ainda não
-  tenho conta".`, async () => {
-    const { history } = renderWithRouter(
-      <UserProvider>
-        <App />
-      </UserProvider>
-    );
+  it(`1.4. Verificação do redirecionamento para a tela de registro ao clicar no botão
+  "Ainda não tenho conta".`, async () => {
+    const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
 
     const registerButton = screen.getByTestId('common_login__button-register');
 
