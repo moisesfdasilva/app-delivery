@@ -6,7 +6,7 @@ import App from '../../App';
 import UserProvider from '../../store/provider/UserProvider';
 
 describe('1. Testes da tela de Login:', () => {
-  it(`1.1. Verificação do redirecionamento para a página de produtos ao logar como cliente(customer),
+  it(`1.1. Verificação do redirecionamento para a tela de produtos ao logar como cliente(customer),
   com email e senha válidas.`, async () => {
     const { history } = renderWithRouter(
       <UserProvider>
@@ -28,7 +28,7 @@ describe('1. Testes da tela de Login:', () => {
     expect(pathname).toBe('/customer/products');
   });
 
-  it(`1.2. Verificação do redirecionamento para a página de ordens de pedidos ao logar como
+  it(`1.2. Verificação do redirecionamento para a tela de ordens de pedidos ao logar como
   vendedor(seller), com email e senha válidas.`, async () => {
     const { history } = renderWithRouter(
       <UserProvider>
@@ -65,5 +65,23 @@ describe('1. Testes da tela de Login:', () => {
     await waitFor(() => 
       expect(screen.getByTestId('common_login__element-invalid-email')).toBeDefined()
     );
+  });
+
+  it(`1.4. Verificação do redirecionamento para a tela de registro ao clicar no "botão Ainda não
+  tenho conta".`, async () => {
+    const { history } = renderWithRouter(
+      <UserProvider>
+        <App />
+      </UserProvider>
+    );
+
+    const registerButton = screen.getByTestId('common_login__button-register');
+
+    userEvent.click(registerButton);
+
+    await waitFor(() => screen.getByTestId('common_register__button-register'));
+
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/register');
   });
 });
