@@ -1,9 +1,10 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../renderWithRouter';
 import App from '../../App';
 import UserProvider from '../../store/provider/UserProvider';
+import ProductProvider from '../../store/provider/ProductProvider';
 import api from '../../services/api';
 import {
   inputValidCustomerMock,
@@ -12,6 +13,8 @@ import {
   outputValidSellerMock,
   inputInvalidCustomerMock,
   outputInvalidCustomerMock,
+  outputProductsMock,
+  outputOrdersMock,
 } from '../mocks/LoginMock';
 
 describe('1. Testes da tela de Login:', () => {
@@ -25,10 +28,18 @@ describe('1. Testes da tela de Login:', () => {
 
   it(`1.1. Verificação do redirecionamento para a tela de produtos ao logar como cliente
   (customer), com email e senha válidos.`, async () => {
-    const mock = jest.spyOn(api, 'post');
-    mock.mockImplementation(() => Promise.resolve(outputValidCustomerMock));
+    const mockLogin = jest.spyOn(api, 'post');
+    mockLogin.mockImplementation(() => Promise.resolve(outputValidCustomerMock));
+    const mockProd = jest.spyOn(api, 'get');
+    mockProd.mockImplementation(() => Promise.resolve({ data: outputProductsMock }));
 
-    const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
+    const { history } = renderWithRouter(
+      <UserProvider>
+        <ProductProvider>
+          <App />
+        </ProductProvider>
+      </UserProvider>,
+    );
 
     const inputEmail = screen.getByTestId(inputEmailTestId);
     const inputPassword = screen.getByTestId(inputPasswordTestId);
@@ -42,6 +53,8 @@ describe('1. Testes da tela de Login:', () => {
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/customer/products');
+
+    userEvent.click(screen.getByTestId(logoutTestId));
   });
 
   it(`1.2. Verificação do redirecionamento para a tela de registro ao clicar no botão
@@ -56,6 +69,7 @@ describe('1. Testes da tela de Login:', () => {
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/register');
+    act(() => { history.push('/'); });
   });
 
   it(`1.3. Verificação da exibição da mensagem "Usuario não cadastrado" ao logar com
@@ -63,7 +77,7 @@ describe('1. Testes da tela de Login:', () => {
     const mock = jest.spyOn(api, 'post');
     mock.mockImplementation(() => Promise.resolve(outputInvalidCustomerMock));
 
-    renderWithRouter(<App />);
+    renderWithRouter(<UserProvider><App /></UserProvider>);
 
     const inputEmail = screen.getByTestId(inputEmailTestId);
     const inputPassword = screen.getByTestId(inputPasswordTestId);
@@ -78,10 +92,13 @@ describe('1. Testes da tela de Login:', () => {
 
   it(`1.4. Verificação do redirecionamento para a tela de ordens de pedidos ao logar como
   vendedor(seller), com email e senha válidos.`, async () => {
-    const mock = jest.spyOn(api, 'post');
-    mock.mockImplementation(() => Promise.resolve(outputValidSellerMock));
+    const mockLogin = jest.spyOn(api, 'post');
+    mockLogin.mockImplementation(() => Promise.resolve(outputValidSellerMock));
+    const mockOrd = jest.spyOn(api, 'get');
+    mockOrd.mockImplementation(() => Promise.resolve({ data: outputOrdersMock }));
 
     const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
+    act(() => { history.push('/'); });
 
     const inputEmail = screen.getByTestId(inputEmailTestId);
     const inputPassword = screen.getByTestId(inputPasswordTestId);

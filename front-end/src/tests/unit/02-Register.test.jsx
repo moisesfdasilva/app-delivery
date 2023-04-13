@@ -7,6 +7,7 @@ import UserProvider from '../../store/provider/UserProvider';
 import api from '../../services/api';
 import {
   inputValidMock,
+  outputValidMock,
   inputInvalidMock,
   outInvalidMock,
 } from '../mocks/RegisterMock';
@@ -22,8 +23,7 @@ describe('2. Testes da tela de Registro(Register):', () => {
   it(`2.1. Verificação do redirecionamento para a tela de produtos ao criar um cliente
   (customer), com nome, email e senha válidos.`, async () => {
     const mock = jest.spyOn(api, 'post');
-    mock.mockImplementation(() => Promise
-      .resolve({ data: { token: true, user: { dataValues: 'DADOS DO USUÁRIO' } } }));
+    mock.mockImplementation(() => Promise.resolve(outputValidMock));
 
     const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
     history.push('/register');
@@ -48,8 +48,7 @@ describe('2. Testes da tela de Registro(Register):', () => {
   it(`2.2. Verificação da exibição da mensagem "Você já possui um cadastro" ao cadastrar
   um email já cadastrado.`, async () => {
     const mock = jest.spyOn(api, 'post');
-    mock.mockImplementation(() => Promise
-      .resolve(outInvalidMock));
+    mock.mockImplementation(() => Promise.resolve(outInvalidMock));
 
     const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
     history.push('/register');
