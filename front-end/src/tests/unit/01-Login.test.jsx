@@ -19,9 +19,9 @@ describe('1. Testes da tela de Login:', () => {
   const inputPasswordTestId = 'common_login__input-password';
   const loginButtonTestId = 'common_login__button-login';
   const invalidTextTestId = 'common_login__element-invalid-email';
-  const logoutTextTestId = 'customer_products__element-navbar-link-logout';
-  const loginRegisterTextTestId = 'common_login__button-register';
-  const registerTextTestId = 'common_register__button-register';
+  const logoutTestId = 'customer_products__element-navbar-link-logout';
+  const loginRegisterTestId = 'common_login__button-register';
+  const registerTestId = 'common_register__button-register';
 
   it(`1.1. Verificação do redirecionamento para a tela de produtos ao logar como cliente
   (customer), com email e senha válidos.`, async () => {
@@ -38,8 +38,7 @@ describe('1. Testes da tela de Login:', () => {
     userEvent.type(inputPassword, inputValidCustomerMock.password);
     userEvent.click(loginButton);
 
-    await waitFor(() => screen
-      .getByTestId(logoutTextTestId));
+    await waitFor(() => screen.getByTestId(logoutTestId));
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/customer/products');
@@ -49,17 +48,17 @@ describe('1. Testes da tela de Login:', () => {
   "Ainda não tenho conta".`, async () => {
     const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
 
-    const registerButton = screen.getByTestId(loginRegisterTextTestId);
+    const registerButton = screen.getByTestId(loginRegisterTestId);
 
     userEvent.click(registerButton);
 
-    await waitFor(() => screen.getByTestId(registerTextTestId));
+    await waitFor(() => screen.getByTestId(registerTestId));
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/register');
   });
 
-  it(`1.3. Verificação da apresentação da mensagem "Usuario não cadastrado" ao logar com
+  it(`1.3. Verificação da exibição da mensagem "Usuario não cadastrado" ao logar com
   email e senha inválidos.`, async () => {
     const mock = jest.spyOn(api, 'post');
     mock.mockImplementation(() => Promise.resolve(outputInvalidCustomerMock));
@@ -92,8 +91,7 @@ describe('1. Testes da tela de Login:', () => {
     userEvent.type(inputPassword, inputValidSellerMock.password);
     userEvent.click(loginButton);
 
-    await waitFor(() => screen
-      .getByTestId(logoutTextTestId));
+    await waitFor(() => screen.getByTestId(logoutTestId));
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/seller/orders');
