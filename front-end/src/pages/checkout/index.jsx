@@ -68,7 +68,11 @@ function Checkout() {
     get();
   }, []);
 
-  useEffect(() => handleCheck(), [sale.sellerId, sale.deliveryNumber, sale.deliveryAddress]);
+  useEffect(() => handleCheck(), [
+    sale.sellerId,
+    sale.deliveryNumber,
+    sale.deliveryAddress,
+  ]);
 
   const header = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitario', 'Sub-total', 'Remover Item'];
