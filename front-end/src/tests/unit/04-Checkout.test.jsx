@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../renderWithRouter';
 import App from '../../App';
@@ -22,15 +22,15 @@ describe('4. Testes da tela de Produtos(Products):', () => {
   const add02ButtonTestId = 'customer_products__button-card-add-item-2';
   const cartButtonTestId = 'customer_products__button-cart';
   const totalPriceButtonTestId = 'customer_checkout__element-order-total-price';
+  const logoutButtonTestId = 'customer_products__element-navbar-link-logout';
 
-  beforeEach(async () => {
-    jest.resetAllMocks();
+  beforeAll(async () => {
     const mockLogin = jest.spyOn(api, 'post');
     mockLogin.mockImplementation(() => Promise.resolve(outputValidCustomerMock));
     const mockPage = jest.spyOn(api, 'get');
     mockPage
       .mockImplementationOnce(() => Promise.resolve({ data: outputProductsMock }))
-      .mockImplementationOnce(() => Promise.resolve({ data: outputSellersMock }));
+      .mockImplementation(() => Promise.resolve({ data: outputSellersMock }));
 
     renderWithRouter(
       <UserProvider>
@@ -67,5 +67,32 @@ describe('4. Testes da tela de Produtos(Products):', () => {
     const removeButtons = screen.getAllByRole('button', { name: 'Remover' });
 
     userEvent.click(removeButtons[0]);
+
+    const abc = screen.getAllByRole('option');
+    userEvent.click(abc[2]);
+
+    const inputAddress = screen.getByTestId('customer_checkout__input-address');
+    userEvent.type(inputAddress, 'Avenida Principal');
+
+    const inputAddressNumber = screen.getByTestId('customer_checkout__input-address-number');
+    userEvent.type(inputAddressNumber, '1100');
+
+    const finishButton = screen.getByTestId('customer_checkout__button-submit-order');
+    userEvent.click(finishButton);
   });
+
+  // it(`4.2. Verificação da remoção de um item do carrinho ao clicar no botão "Remover",
+  // na coluna "Remover Item".`, async () => {
+    // const selectSeller = screen.getByTestId('customer_checkout__select-seller');
+    // const inputAddress = screen.findByTestId('customer_checkout__input-address');
+    // const inputAddressNumber = screen.findByTestId('customer_checkout__input-address-number');
+    // const finishButton = screen.findByTestId('customer_checkout__button-submit-order');
+
+    // userEvent.selectOptions(selectSeller, ['Moscardo']);
+    // userEvent.change(selectSeller, 'Moscardo');
+    // userEvent.type(selectSeller, 'Moscardo');
+    // userEvent.type(inputAddress, 'Avenida Principal');
+    // userEvent.type(inputAddressNumber, '1100');
+    // userEvent.click(await finishButton);
+  // });
 });
