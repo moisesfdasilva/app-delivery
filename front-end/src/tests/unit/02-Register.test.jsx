@@ -38,8 +38,7 @@ describe('2. Testes da tela de Registro(Register):', () => {
     userEvent.type(inputPassword, inputValidMock.password);
     userEvent.click(registerButton);
 
-    await waitFor(() => screen
-      .getByTestId(logoutTestId));
+    await waitFor(() => screen.getByTestId(logoutTestId));
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/customer/products');
