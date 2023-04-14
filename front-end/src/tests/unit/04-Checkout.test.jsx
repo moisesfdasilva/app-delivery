@@ -10,26 +10,27 @@ import {
   inputValidCustomerMock,
   outputValidCustomerMock,
   outputProductsMock,
-  outputOrdersMock,
-} from '../mocks/ProductsMock';
+  outputSellersMock,
+} from '../mocks/CheckoutMock';
 
-describe('3. Testes da tela de Produtos(Products):', () => {
+describe('4. Testes da tela de Produtos(Products):', () => {
   const inputEmailTestId = 'common_login__input-email';
   const inputPasswordTestId = 'common_login__input-password';
   const loginButtonTestId = 'common_login__button-login';
   const logoutTestId = 'customer_products__element-navbar-link-logout';
-  const ordersButtonTestId = 'customer_products__element-navbar-link-orders';
-  const logoutButtonTestId = 'customer_products__element-navbar-link-logout';
-  const removeButtonTestId = 'customer_products__button-card-rm-item-1';
-  const addButtonTestId = 'customer_products__button-card-add-item-1';
+  const add01ButtonTestId = 'customer_products__button-card-add-item-1';
+  const add02ButtonTestId = 'customer_products__button-card-add-item-2';
+  const cartButtonTestId = 'customer_products__button-cart';
+  const totalPriceButtonTestId = 'customer_checkout__element-order-total-price';
 
   beforeEach(async () => {
+    jest.resetAllMocks();
     const mockLogin = jest.spyOn(api, 'post');
     mockLogin.mockImplementation(() => Promise.resolve(outputValidCustomerMock));
     const mockPage = jest.spyOn(api, 'get');
     mockPage
       .mockImplementationOnce(() => Promise.resolve({ data: outputProductsMock }))
-      .mockImplementationOnce(() => Promise.resolve({ data: outputOrdersMock }));
+      .mockImplementationOnce(() => Promise.resolve({ data: outputSellersMock }));
 
     renderWithRouter(
       <UserProvider>
@@ -48,25 +49,23 @@ describe('3. Testes da tela de Produtos(Products):', () => {
     userEvent.click(loginButton);
 
     await waitFor(() => screen.getByTestId(logoutTestId));
+
+    const add01ItemButton = screen.getByTestId(add01ButtonTestId);
+    const add02ItemButton = screen.getByTestId(add02ButtonTestId);
+
+    const cartButton = screen.getByTestId(cartButtonTestId);
+
+    userEvent.click(add01ItemButton);
+    userEvent.click(add02ItemButton);
+    userEvent.click(cartButton);
+
+    await waitFor(() => screen.getByTestId(totalPriceButtonTestId));
   });
 
-  it(`3.1. Verificação do redirecionamento para a tela das ordens de pedidos ao clicar no
-  botão "Meus Pedidos".`, async () => {
-    const navButtonOrders = screen.getByTestId(ordersButtonTestId);
-    userEvent.click(navButtonOrders);
-    const navButtonLogout = screen.getByTestId(logoutButtonTestId);
-    userEvent.click(navButtonLogout);
-  });
+  it(`4.1. Verificação da remoção de um item do carrinho ao clicar no botão "Remover",
+  na coluna "Remover Item".`, async () => {
+    const removeButtons = screen.getAllByRole('button', { name: 'Remover' });
 
-  it('3.2. Verificação da adição ou remoção de pedidos no carrinho de compras.', () => {
-    const removeItemButton = screen.getByTestId(removeButtonTestId);
-    const addItemButton = screen.getByTestId(addButtonTestId);
-    const navButtonLogout = screen.getByTestId(logoutButtonTestId);
-
-    userEvent.click(removeItemButton);
-    userEvent.click(addItemButton);
-    userEvent.click(removeItemButton);
-
-    userEvent.click(navButtonLogout);
+    userEvent.click(removeButtons[0]);
   });
 });

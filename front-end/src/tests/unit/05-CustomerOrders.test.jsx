@@ -9,7 +9,7 @@
 //   inputValidMock,
 // } from '../mocks/RegisterMock';
 
-describe('3. Testes da tela de Ordens do Cliente(Customer Orders):', () => {
+describe('5. Testes da tela de Ordens do Cliente(Customer Orders):', () => {
   // const inputNameTestId = 'common_register__input-name';
   // const inputEmailTestId = 'common_register__input-email';
   // const inputPasswordTestId = 'common_register__input-password';
@@ -18,7 +18,7 @@ describe('3. Testes da tela de Ordens do Cliente(Customer Orders):', () => {
 
   // afterEach(() => cleanUpDatabase(globalDatabase));
 
-  it(`3.1. Verificação do redirecionamento para a tela de produtos ao criar um cliente
+  it(`5.1. Verificação do redirecionamento para a tela de produtos ao criar um cliente
   (customer), com nome, email e senha válidos.`, async () => {
     // const mock = jest.spyOn(api, 'post');
     // mock.mockImplementation(() => Promise
