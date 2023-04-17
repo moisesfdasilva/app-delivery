@@ -35,9 +35,15 @@ const outputSellersMock = {
   ],
 };
 
+const inputAddressMock = {
+  address: 'Avenida Principal',
+  number: '1100',
+};
+
 module.exports = {
   inputValidCustomerMock,
   outputValidCustomerMock,
   outputProductsMock,
   outputSellersMock,
+  inputAddressMock,
 };

@@ -11,6 +11,7 @@ import {
   outputValidCustomerMock,
   outputProductsMock,
   outputSellersMock,
+  inputAddressMock,
 } from '../mocks/CheckoutMock';
 
 describe('4. Testes da tela de Produtos(Products):', () => {
@@ -22,8 +23,12 @@ describe('4. Testes da tela de Produtos(Products):', () => {
   const add02ButtonTestId = 'customer_products__button-card-add-item-2';
   const cartButtonTestId = 'customer_products__button-cart';
   const totalPriceButtonTestId = 'customer_checkout__element-order-total-price';
+  const logoutButtonTestId = 'customer_products__element-navbar-link-logout';
+  const inputAddressTestId = 'customer_checkout__input-address';
+  const inputAddNumbTestId = 'customer_checkout__input-address-number';
+  const finishButtonTestId = 'customer_checkout__button-submit-order';
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const mockLogin = jest.spyOn(api, 'post');
     mockLogin.mockImplementation(() => Promise.resolve(outputValidCustomerMock));
     const mockPage = jest.spyOn(api, 'get');
@@ -61,25 +66,25 @@ describe('4. Testes da tela de Produtos(Products):', () => {
     await waitFor(() => screen.getByTestId(totalPriceButtonTestId));
   });
 
-  it(`4.1. Verificação da remoção de um item do carrinho ao clicar no botão "Remover",
+  it(`4.1. Verificação da retirada de um item do carrinho ao clicar no botão "Remover",
   na coluna "Remover Item".`, async () => {
     const removeButtons = screen.getAllByRole('button', { name: 'Remover' });
+    const navButtonLogout = screen.getByTestId(logoutButtonTestId);
 
     userEvent.click(removeButtons[0]);
+    userEvent.click(navButtonLogout);
+  });
 
-    const abc = screen.getAllByRole('option');
-    userEvent.click(abc[2]);
+  it(`4.2. Verificação da fechamento do pedido ao preencher os inputs vendedor, endereço,
+  número e clicar no botão "Finalizar Pedido".`, async () => {
+    const allSellers = screen.getAllByRole('option');
+    const inputAddress = screen.getByTestId(inputAddressTestId);
+    const inputAddressNumber = screen.getByTestId(inputAddNumbTestId);
+    const finishButton = screen.getByTestId(finishButtonTestId);
 
-    const inputAddress = screen
-      .getByTestId('customer_checkout__input-address');
-    userEvent.type(inputAddress, 'Avenida Principal');
-
-    const inputAddressNumber = screen
-      .getByTestId('customer_checkout__input-address-number');
-    userEvent.type(inputAddressNumber, '1100');
-
-    const finishButton = screen
-      .getByTestId('customer_checkout__button-submit-order');
+    userEvent.click(allSellers[1]);
+    userEvent.type(inputAddress, inputAddressMock.address);
+    userEvent.type(inputAddressNumber, inputAddressMock.number);
     userEvent.click(finishButton);
   });
 });
