@@ -1,5 +1,5 @@
 import { screen, waitFor, act } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../renderWithRouter';
 import App from '../../App';
 import UserProvider from '../../store/provider/UserProvider';
@@ -7,11 +7,12 @@ import ProductProvider from '../../store/provider/ProductProvider';
 import api from '../../services/api';
 import {
   outputOrderDetailsMock,
-} from '../mocks/CustomerOrdersMock';
+} from '../mocks/CustomerOrderDetailsMock';
 
 describe(`6. Testes da tela de Detalhes das Ordens de Pedidos do Cliente(Customer
 Order Details):`, () => {
   const totalPriceTestId = 'customer_order_details__element-order-total-price';
+  const deliveryCheckTestId = 'customer_order_details__button-delivery-check';
 
   beforeEach(async () => {
     const { history } = renderWithRouter(
@@ -31,11 +32,8 @@ Order Details):`, () => {
     await waitFor(() => screen.getByTestId(totalPriceTestId));
   });
 
-  it(`6.1. Verificação do redirecionamento para a tela de detalhes da ordem de pedidos ao
-  clicar na ordem.`, async () => {
-    // await waitFor(() => screen.getAllByText('Pedido'));
-    // const order = screen.getByTestId(orderTestId);
-    // userEvent.click(order);
-    // await waitFor(() => screen.getByTestId(totalPriceTestId));
+  it('6.1. Verificação do funcionamento do botão "MARCAR COMO ENTREGUE".', async () => {
+    const deliveryCheck = screen.getByTestId(deliveryCheckTestId);
+    userEvent.click(deliveryCheck);
   });
 });
