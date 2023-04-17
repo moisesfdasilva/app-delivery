@@ -1,46 +1,71 @@
-// import React from 'react';
-// import { screen, waitFor } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
-// import renderWithRouter from '../renderWithRouter';
-// import App from '../../App';
-// import UserProvider from '../../store/provider/UserProvider';
-// import api from '../../services/api';
-// import {
-//   inputValidMock,
-// } from '../mocks/RegisterMock';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import renderWithRouter from '../renderWithRouter';
+import App from '../../App';
+import UserProvider from '../../store/provider/UserProvider';
+import ProductProvider from '../../store/provider/ProductProvider';
+import api from '../../services/api';
+import {
+  inputValidCustomerMock,
+  outputValidCustomerMock,
+  outputProductsMock,
+  outputOrdersMock,
+  outputOrderDetailsMock,
+  localStorageUserMock,
+} from '../mocks/CustomerOrdersMock';
 
 describe('5. Testes da tela de Ordens do Cliente(Customer Orders):', () => {
-  // const inputNameTestId = 'common_register__input-name';
-  // const inputEmailTestId = 'common_register__input-email';
-  // const inputPasswordTestId = 'common_register__input-password';
-  // const registerButtonTestId = 'common_register__button-register';
-  // const logoutTestId = 'customer_products__element-navbar-link-logout';
+  const inputEmailTestId = 'common_login__input-email';
+  const inputPasswordTestId = 'common_login__input-password';
+  const loginButtonTestId = 'common_login__button-login';
+  const logoutTestId = 'customer_products__element-navbar-link-logout';
+  const ordersButtonTestId = 'customer_products__element-navbar-link-orders';
+  const orderTestId = 'customer_orders__element-order-id-1';
+  const totalPriceTestId = 'customer_order_details__element-order-total-price';
 
-  // afterEach(() => cleanUpDatabase(globalDatabase));
+  beforeEach(async () => {
+    const mockLogin = jest.spyOn(api, 'post');
+    mockLogin.mockImplementation(() => Promise.resolve(outputValidCustomerMock));
+    const mockPage = jest.spyOn(api, 'get');
+    mockPage
+      .mockImplementationOnce(() => Promise.resolve({ data: outputProductsMock }))
+      .mockImplementationOnce(() => Promise.resolve({ data: outputOrdersMock }))
+      .mockImplementation(() => Promise.resolve({ data: outputOrderDetailsMock }));
 
-  it(`5.1. Verificação do redirecionamento para a tela de produtos ao criar um cliente
-  (customer), com nome, email e senha válidos.`, async () => {
-    // const mock = jest.spyOn(api, 'post');
-    // mock.mockImplementation(() => Promise
-    //   .resolve({ data: { token: true, user: { dataValues: 'DADOS DO USUÁRIO' } } }));
+    renderWithRouter(
+      <UserProvider>
+        <ProductProvider>
+          <App />
+        </ProductProvider>
+      </UserProvider>,
+    );
 
-    // const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
-    // history.push('/register');
+    const inputEmail = screen.getByTestId(inputEmailTestId);
+    const inputPassword = screen.getByTestId(inputPasswordTestId);
+    const loginButton = screen.getByTestId(loginButtonTestId);
 
-    // const inputName = screen.getByTestId(inputNameTestId);
-    // const inputEmail = screen.getByTestId(inputEmailTestId);
-    // const inputPassword = screen.getByTestId(inputPasswordTestId);
-    // const registerButton = screen.getByTestId(registerButtonTestId);
+    userEvent.type(inputEmail, inputValidCustomerMock.email);
+    userEvent.type(inputPassword, inputValidCustomerMock.password);
+    userEvent.click(loginButton);
 
-    // userEvent.type(inputName, inputValidMock.name);
-    // userEvent.type(inputEmail, inputValidMock.email);
-    // userEvent.type(inputPassword, inputValidMock.password);
-    // userEvent.click(registerButton);
+    await waitFor(() => screen.getByTestId(logoutTestId));
 
-    // await waitFor(() => screen
-    //   .getByTestId(logoutTestId));
+    const ordersButton = screen.getByTestId(ordersButtonTestId);
+    userEvent.click(ordersButton);
 
-    // const { location: { pathname } } = history;
-    // expect(pathname).toBe('/customer/products');
+    const mockGetToLocalStorage = jest.spyOn(Storage.prototype, 'getItem');
+    mockGetToLocalStorage.mockImplementation(() => localStorageUserMock);
+    const mockGetToLocalStorageParse = jest.spyOn(JSON, 'parse');
+    mockGetToLocalStorageParse.mockImplementation(() => localStorageUserMock);
+    const mockArray = jest.spyOn(Object, 'values');
+    mockArray.mockImplementation(() => outputOrdersMock.orders);
+  });
+
+  it(`5.1. Verificação do redirecionamento para a tela de detalhes da ordem de pedidos ao
+  clicar na ordem.`, async () => {
+    await waitFor(() => screen.getAllByText('Pedido'));
+    const order = screen.getByTestId(orderTestId);
+    userEvent.click(order);
+    await waitFor(() => screen.getByTestId(totalPriceTestId));
   });
 });
