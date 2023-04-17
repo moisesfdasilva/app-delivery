@@ -15,6 +15,10 @@ Order Details):`, () => {
   const deliveryCheckTestId = 'customer_order_details__button-delivery-check';
 
   beforeEach(async () => {
+    const mockPage = jest.spyOn(api, 'get');
+    mockPage
+      .mockImplementationOnce(() => Promise.resolve({ data: outputOrderDetailsMock }));
+
     const { history } = renderWithRouter(
       <UserProvider>
         <ProductProvider>
@@ -22,10 +26,6 @@ Order Details):`, () => {
         </ProductProvider>
       </UserProvider>,
     );
-
-    const mockPage = jest.spyOn(api, 'get');
-    mockPage
-      .mockImplementationOnce(() => Promise.resolve({ data: outputOrderDetailsMock }));
 
     act(() => { history.push('/customer/orders/333'); });
 

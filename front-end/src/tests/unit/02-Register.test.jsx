@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../renderWithRouter';
 import App from '../../App';
@@ -8,6 +8,7 @@ import api from '../../services/api';
 import {
   inputValidMock,
   outputValidMock,
+  outputProductsMock,
   inputInvalidMock,
   outInvalidMock,
 } from '../mocks/RegisterMock';
@@ -22,11 +23,15 @@ describe('2. Testes da tela de Registro(Register):', () => {
 
   it(`2.1. Verificação do redirecionamento para a tela de produtos ao criar um cliente
   (customer), com nome, email e senha válidos.`, async () => {
-    const mock = jest.spyOn(api, 'post');
-    mock.mockImplementation(() => Promise.resolve(outputValidMock));
+    const mockSave = jest.spyOn(api, 'post');
+    mockSave
+      .mockImplementationOnce(() => Promise.resolve(outputValidMock));
+    const mockProd = jest.spyOn(api, 'get');
+    mockProd
+      .mockImplementationOnce(() => Promise.resolve({ data: outputProductsMock }));
 
     const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
-    history.push('/register');
+    act(() => { history.push('/register'); });
 
     const inputName = screen.getByTestId(inputNameTestId);
     const inputEmail = screen.getByTestId(inputEmailTestId);
@@ -42,15 +47,18 @@ describe('2. Testes da tela de Registro(Register):', () => {
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/customer/products');
+
+    const logout = screen.getByTestId(logoutTestId);
+    userEvent.click(logout);
   });
 
   it(`2.2. Verificação da exibição da mensagem "Você já possui um cadastro" ao cadastrar
   um email já cadastrado.`, async () => {
     const mock = jest.spyOn(api, 'post');
-    mock.mockImplementation(() => Promise.resolve(outInvalidMock));
+    mock.mockImplementationOnce(() => Promise.resolve(outInvalidMock));
 
     const { history } = renderWithRouter(<UserProvider><App /></UserProvider>);
-    history.push('/register');
+    act(() => { history.push('/register'); });
 
     const inputName = screen.getByTestId(inputNameTestId);
     const inputEmail = screen.getByTestId(inputEmailTestId);
