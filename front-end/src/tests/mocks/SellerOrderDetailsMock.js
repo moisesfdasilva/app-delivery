@@ -2,12 +2,12 @@ const outputOrderDetailsMock = {
   order: {
     id: 333,
     userId: 44,
-    sellerId: 100,
+    sellerId: 77,
     totalPrice: '8.40',
     deliveryAddress: 'Santos Rua',
     deliveryNumber: '363',
     saleDate: '2023-04-10T21:45:25.000Z',
-    status: 'Pendente',
+    status: 'Em Trânsito',
     user: { name: 'Coelho Ricochete' },
     seller: { name: 'Silvio Santos' },
     products: [
