@@ -11,6 +11,7 @@ import CustomerOrder from './pages/customerOrder';
 import CustomerOrderDetail from './pages/customerOrderDetails';
 import SellerOrder from './pages/sellerOrder';
 import SellerOrderDetails from './pages/sellerOrderDetails';
+import Admin from './pages/admin';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/customer/orders/:id" component={ CustomerOrderDetail } />
         <Route exact path="/seller/orders" component={ SellerOrder } />
         <Route path="/seller/orders/:id" component={ SellerOrderDetails } />
+        <Route path="/admin/manage" component={ Admin } />
         <ProductProvider>
           <Route path="/customer/products" component={ Products } />
           <Route path="/customer/checkout" component={ Checkout } />

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar';
 import TableElement from './components/tableElement';
 import THead from './components/thead';
-import Select from './components/select';
+import Select from '../../components/Select';
 import getAllSellers from '../../services/user.service';
 import sendSale from '../../services/sale.service';
 

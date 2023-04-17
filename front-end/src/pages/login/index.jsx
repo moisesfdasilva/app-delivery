@@ -35,6 +35,8 @@ function Login() {
     switch (role) {
     case 'customer':
       return history.push('/customer/products');
+    case 'administrator':
+      return history.push('/admin/manage');
     case 'seller':
       return history.push('/seller/orders');
     default:
@@ -68,6 +70,7 @@ function Login() {
       await api.get('/user/verify', { headers: { Authorization: token } });
       redirect(role);
     } catch (err) {
+      localStorage.removeItem('user');
       return history.push('/');
     }
   };

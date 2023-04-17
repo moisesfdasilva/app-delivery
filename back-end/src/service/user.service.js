@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Users } = require('../database/models');
 const { jwtEncode, jwtDecode } = require('../utils/jwtToken/jwt');
 
@@ -8,6 +9,23 @@ const verifyTokenCustomer = (token) => {
   } catch (error) {
     return { status: 401, message: 'NOT_AUTHORIZED' };
   }
+};
+
+const deleteUser = async (id) => {
+  await Users.destroy({ where: { id } });
+};
+
+const getUsersComun = async () => {
+  const users = await Users.findAll({
+    where: {
+      role: {
+        [Op.not]: 'administrator',
+      },
+    },
+    attributes: { exclude: 'password' },
+  });
+
+  return users;
 };
 
 const getSaller = async () => {
@@ -26,13 +44,12 @@ const postLogin = async (email, password) => {
   });
 
   if (!user) return { type: 'USER_NOT_FOUND', message: 'Not found' };
-console.log('usuario', user);
   const token = jwtEncode(user.dataValues);
 
   return { user, token };
 };
 
-const postRegister = async (name, email, password) => {
+const postRegister = async (name, email, password, role) => {
   const user = await Users.findOne({
     where: { email, password },
     attributes: { exclude: ['password', 'id'] },
@@ -41,7 +58,7 @@ const postRegister = async (name, email, password) => {
   if (user) {
     return { type: 409, message: 'Conflict' };
   }
-  await Users.create({ name, email, password, role: 'customer' });
+  await Users.create({ name, email, password, role });
   return { type: null, message: 'Created' };
 };
 
@@ -50,4 +67,6 @@ module.exports = {
   postRegister,
   verifyTokenCustomer,
   getSaller,
+  getUsersComun,
+  deleteUser,
 };
