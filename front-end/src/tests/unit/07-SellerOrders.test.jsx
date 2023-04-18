@@ -10,7 +10,7 @@ import {
   outputValidSellerMock,
   outputOrdersMock,
   outputOrderDetailsMock,
-} from '../mocks/SellerOrders';
+} from '../mocks/SellerOrdersMock';
 
 describe('7. Testes da tela de Ordens de Pedidos do Vendedor(SellerOrder):', () => {
   const inputEmailTestId = 'common_login__input-email';

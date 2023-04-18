@@ -25,14 +25,13 @@ function Admin() {
     }
   };
 
-  useEffect(() => {
-    async function get() {
-      const result = await getUsersComun();
-      setUsers(result);
-    }
+  async function get() {
+    const result = await getUsersComun();
+    setUsers(result);
+  }
 
-    get();
-  }, [handleRegister]);
+  useEffect(() => get(), []);
+  useEffect(() => get(), [handleRegister]);
 
   const remove = async (id) => {
     await deleteUsers(id, user.token);
